@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { link } from "fs";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -9,10 +10,12 @@ export default function Home() {
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Card>Hai saya Card</Card>
         <Button>Submit</Button>
-        <Button variant="link" className="font-semibold">
-          Register
-        </Button>
+       
         {/* coba bikin link href button yg di youtube tadi */}
+        
+        <Link href="/login" className={buttonVariants({variant:'default'})}>Click ke Halaman Login</Link>
+
+
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
