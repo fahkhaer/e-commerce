@@ -1,6 +1,6 @@
 //isinya ada di-ss
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -14,8 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/ui/logo";
+import Link from "next/link";
 
-export default function Login() {
+export default function LoginPage() {
   return (
     <div className="flex justify-center items-center h-screen">
       <Card className="w-full max-w-md">
@@ -30,14 +31,8 @@ export default function Login() {
         </CardHeader>
         <CardContent>
           <form>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+              <div className="grid gap-4">
                 <Input id="email" type="email" placeholder="Email" required />
-              </div>
-
-              <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -45,7 +40,6 @@ export default function Login() {
                   required
                 />
               </div>
-            </div>
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
@@ -56,7 +50,7 @@ export default function Login() {
             <p className="text-sm pt-1">Don't have an account?</p>
             <CardAction className="">
               <Button className="px-2 pt-0" variant="link">
-                Register
+                <Link href="/register"> Register</Link>
               </Button>
             </CardAction>
           </div>
