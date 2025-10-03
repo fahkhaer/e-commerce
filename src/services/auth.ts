@@ -1,1 +1,1 @@
-//isinya sebagian, ada di-ss
+//ada filenya dikirim sama coach. di file"unduhan"

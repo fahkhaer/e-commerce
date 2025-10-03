@@ -3,6 +3,7 @@ import { FC, SVGProps } from "react";
 export const Logo: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
+    className="shrink-0"
       width="106"
       height="42"
       viewBox="0 0 106 42"
@@ -10,7 +11,7 @@ export const Logo: FC<SVGProps<SVGSVGElement>> = (props) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <rect width="105.188" height="42" fill="white" />
-      <g clip-path="url(#clip0_42313_12347)">
+      <g clipPath="url(#clip0_42313_12347)">
         <mask
           id="mask0_42313_12347"
           style={{ maskType: "luminance" }}
