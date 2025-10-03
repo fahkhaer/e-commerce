@@ -1,0 +1,1 @@
+//isinya sebagian, ada di-ss
