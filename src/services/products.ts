@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/api-clients";
-import { iProduct, iProductResponse } from "@/types/product.interface";
+import { iProduct } from "@/types/product.interface";
 
 const id = 10
 

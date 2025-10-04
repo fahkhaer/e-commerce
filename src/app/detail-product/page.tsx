@@ -1,17 +1,13 @@
-import Catalog from "@/components/layouts/Catalog";
 import MainLayout from "@/components/layouts/MainLayout";
 import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import HeroImage from "@/components/ui/hero";
 import Link from "next/link";
 
 export default function DetailProduct() {

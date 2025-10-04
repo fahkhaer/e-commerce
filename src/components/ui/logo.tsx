@@ -1,6 +1,6 @@
 import { FC, SVGProps } from "react";
 
-export const Logo: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const Logo: FC<SVGProps<SVGSVGElement>> = () => {
   return (
     <svg
     className="shrink-0"

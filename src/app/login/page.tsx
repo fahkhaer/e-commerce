@@ -1,6 +1,4 @@
-//isinya ada di-ss
-
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -12,7 +10,6 @@ import {
 } from "@/components/ui/card";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/ui/logo";
 import Link from "next/link";
 
@@ -47,7 +44,7 @@ export default function LoginPage() {
             <Link href="/before-open-store"> Login</Link> 
           </Button>
           <div className="flex">
-            <p className="text-sm pt-1">Don't have an account?</p>
+            <p className="text-sm pt-1">Don&apos;t have an account?</p>
             <CardAction className="">
               <Button className="px-2 pt-0" variant="link">
                 <Link href="/register"> Register</Link>

@@ -1,7 +1,6 @@
 import Catalog from "@/components/layouts/Catalog";
 import MainLayout from "@/components/layouts/MainLayout";
 import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
-import { Button } from "@/components/ui/button";
 import HeroImage from "@/components/ui/hero";
 
 export default function BeforeOpenStore() {
