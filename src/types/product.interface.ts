@@ -1,5 +1,4 @@
 export interface iProduct {
-  map(arg0: (item: any) => void): import("react").ReactNode;
   id: number;
   title: string;
   slug: string;
@@ -19,5 +18,16 @@ export interface iProduct {
     name: string;
     slug: string;
     logo: string | null;
+  };
+}
+
+export interface iProductResponse {
+  data: {
+    products: iProduct[]; // Array of products
+    meta: {
+      totalProducts: number; // Total jumlah produk yang tersedia
+      page: number;          // Halaman saat ini
+      perPage: number;       // Jumlah produk per halaman
+    };
   };
 }

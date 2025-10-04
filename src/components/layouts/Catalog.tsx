@@ -1,6 +1,32 @@
+'use client'
+
+import { getProducts, getProductsById } from "@/services/products";
+import { iProduct } from "@/types/product.interface";
+import { useQuery } from "@tanstack/react-query";
 import { BadgeCheck, Link, Star } from "lucide-react";
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
+
 
 export default function Catalog() {
+  const [visibleItems, setVisibleItems] = useState(16);
+
+  const { data, isLoading } = useQuery<iProduct[]>({
+    queryKey: ["products"],
+    queryFn: () => getProducts(),
+  }) 
+
+  const loadMore = () => {
+    setVisibleItems((prev) => prev + 16);
+  };
+
+
+const dataToDisplay = Array.isArray(data) ? data.slice(0, visibleItems) : [];
+
+    
+
+  if (isLoading) return <p>Loading...</p>;
   return (
     <>
       {/* grid daftar produk */}
@@ -8,39 +34,54 @@ export default function Catalog() {
         <div className="mx-auto max-w-[1200px]">
           <div className="grid gap-5 grid-cols-2 md:grid-cols-4">
             {/* put card product here */}
-            <div className="shadow-[0_0_20px_0_#CBCACA40]">
+            { dataToDisplay?.map((item: iProduct,)=>
+
+            <div key={item.id} className="shadow-[0_0_20px_0_#CBCACA40]">
               {/* product image */}
               <div>
                 <img
                   className="h-auto w-full"
-                  src="productexample.png"
-                  alt=""
+                  src={item.images[0] || 'productexample.png'}
+                  alt="productexample.png"
                 />
               </div>
               {/* product description */}
               <div className="p-3 ">
-                <div
-                  className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
-                >
-                  Sneakers Court Minimalis
+                <div className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block">
+                  {item.title}
                 </div>
-                <p className="text-sm md:text-base font-bold py-1">Rp275.000</p>
+                <p className="text-sm md:text-base font-bold py-1">{item.price}</p>
                 <div className="flex items-center">
                   <Star className="fill-[#FFAB0D] stroke-0 h-4" />
                   <div>
-                    <span>4.9</span>
-                    <span>・10 Sold </span>
+                    <span>{item.rating}</span>
+                    <span>{item.soldCount}</span>
                   </div>
                 </div>
                 <div className="flex items-center">
                   <BadgeCheck className="fill-[#176FFB] stroke-white h-4.5" />
-                  <div>Toko Barokah Jaya </div>
+                  <div>{item.shop.name}</div>
                 </div>
               </div>
             </div>
+            )}
           </div>
+                {visibleItems < (data as iProduct []).length && (
+        <div className="mt-4">
+          <Button
+            onClick={loadMore}
+            className={cn(
+              'px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition'
+            )}
+          >
+            Load More
+          </Button>
+        </div>
+      )}
+
         </div>
       </div>
     </>
   );
 }
+length
