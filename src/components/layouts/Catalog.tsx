@@ -39,6 +39,8 @@ export default function Catalog() {
                     className="h-auto w-full"
                     src={item.images[0] || "productexample.png"}
                     alt="productexample.png"
+                    width={100}
+                    height={500}
                   />
                 </div>
                 {/* product description */}
