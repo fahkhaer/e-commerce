@@ -1,0 +1,24 @@
+import Catalog from "@/components/layouts/Catalog";
+import MainLayout from "@/components/layouts/MainLayout";
+import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
+import { Button } from "@/components/ui/button";
+import HeroImage from "@/components/ui/hero";
+
+export default function BeforeOpenStore() {
+  return (
+    <>
+      <NavbarLoginUser />
+      <MainLayout>
+        <HeroImage></HeroImage>
+        <div className="w-full mt-10">
+          <h2 className="text-2xl md:text-4xl font-bold text-neutral-950">
+            Featured Product
+          </h2>
+        </div>
+
+        {/* grid daftar produk */}
+        <Catalog></Catalog>
+      </MainLayout>
+    </>
+  );
+}

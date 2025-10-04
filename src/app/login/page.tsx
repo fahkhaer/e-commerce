@@ -31,20 +31,20 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <form>
-              <div className="grid gap-4">
-                <Input id="email" type="email" placeholder="Email" required />
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                  required
-                />
-              </div>
+            <div className="grid gap-4">
+              <Input id="email" type="email" placeholder="Email" required />
+              <Input
+                id="password"
+                type="password"
+                placeholder="Password"
+                required
+              />
+            </div>
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full">
-            Login
+          <Button asChild type="submit" className="w-full">
+            <Link href="/before-open-store"> Login</Link> 
           </Button>
           <div className="flex">
             <p className="text-sm pt-1">Don't have an account?</p>
