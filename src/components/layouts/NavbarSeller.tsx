@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { Badge } from "../ui/badge";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import { Command, CommandInput } from "../ui/command";
 import { LayoutGrid, SearchIcon, ShoppingCart, Store } from "lucide-react";
 import { Logo } from "../ui/logo";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 
 export default function NavbarSeller() {
   return (

@@ -1,7 +1,7 @@
 //isinya ada di-ss
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,

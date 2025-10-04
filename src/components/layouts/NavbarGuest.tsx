@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Badge } from "../ui/badge";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import { Command, CommandInput } from "../ui/command";
 import { LayoutGrid, SearchIcon, ShoppingCart } from "lucide-react";
 import { Logo } from "../ui/logo";
