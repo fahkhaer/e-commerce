@@ -38,6 +38,7 @@ export default function DetailProduct() {
         </div>
         
         <div className="flex flex-col md:flex-row gap-5 items-start">
+          
 
         </div>
 

@@ -3,8 +3,6 @@ import MainLayout from "@/components/layouts/MainLayout";
 import NavbarGuest from "@/components/layouts/NavbarGuest";
 import HeroImage from "@/components/ui/hero";
 
-import DetailProduct from "./detail-product/page";
-
 export default function Home() {
   return (
     <>
@@ -18,8 +16,7 @@ export default function Home() {
           </h2>
         </div>
         {/* grid daftar produk */}
-        <Catalog/>
-        <DetailProduct/>
+        <Catalog />
       </MainLayout>
     </>
   );
