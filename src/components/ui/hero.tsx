@@ -15,6 +15,7 @@ export default function HeroImage() {
             alt=""
             width={400}
             height={100}
+            priority
           />
         </div>
 

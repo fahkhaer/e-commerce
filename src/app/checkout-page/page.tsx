@@ -104,6 +104,7 @@ export default function CheckoutPage() {
                       width={40}
                       height={40}
                       className="rounded-[8px]"
+                      priority
                     />
                     <Label
                       htmlFor="bni"
@@ -125,6 +126,7 @@ export default function CheckoutPage() {
                       width={40}
                       height={40}
                       className="rounded-[8px]"
+                      priority
                     />
                     <Label
                       htmlFor="bri"
@@ -181,6 +183,7 @@ export default function CheckoutPage() {
                     width={80}
                     height={80}
                     className="rounded-xl"
+                    priority
                   />
                   <div className="pl-3">
                     <h2 className="text-left leading-7 pb-1 md:pb-0 md:leading-8 font-bold text-sm md:text-lg">
@@ -210,6 +213,7 @@ export default function CheckoutPage() {
                     width={80}
                     height={80}
                     className="rounded-xl"
+                    priority
                   />
                   <div className="pl-3">
                     <h2 className="text-left leading-7 pb-1 md:pb-0 md:leading-8 font-bold text-sm md:text-lg">

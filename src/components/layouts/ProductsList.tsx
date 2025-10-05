@@ -56,6 +56,7 @@ export function ProductsList() {
                     className="w-12 h-12 rounded-md object-cover"
                     width={100}
                     height={100}
+                    priority
                   />
                   <div>
                     <p className="font-medium">Sneakers Court Minimalis</p>

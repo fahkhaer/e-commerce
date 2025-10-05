@@ -83,6 +83,7 @@ export default function DetailProduct() {
                   width={400}
                   height={400}
                   className="rounded-xl"
+                  priority
                 />
               </div>
               <div
@@ -96,6 +97,7 @@ export default function DetailProduct() {
                     className="group hover:border-2 hover:border-neutral-950 hover:rounded-2xl"
                   >
                     <Image
+                    priority
                       src={item}
                       alt={`Product ${i + 1}`}
                       width={72}
@@ -258,6 +260,7 @@ export default function DetailProduct() {
                       width={300}
                       height={300}
                       className="w-full"
+                      priority
                     />
                   </div>
                   <div className="p-5">

@@ -65,6 +65,7 @@ export default function Reviews() {
                     width={40}
                     height={40}
                     className="rounded-md"
+                    priority
                   />
                   <span>{r.product}</span>
                 </TableCell>
