@@ -19,10 +19,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/services/products";
 import { iProduct } from "@/types/product.interface";
 import { useEffect, useState } from "react";
+import { iCategory } from "@/types/category.interface";
+import { getCategories } from "@/services/categories";
 
 export default function CatalogPage() {
   const [selectedValue, setSelectedValue] = useState("most-popular");
   const [dataSorted, setDataSorted] = useState<iProduct[]>();
+  const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
 
   const { data: products, isLoading: isLoadingProducts } = useQuery<iProduct[]>(
     {
@@ -31,11 +34,35 @@ export default function CatalogPage() {
     }
   );
 
+  const { data: categories } = useQuery<iCategory[]>({
+    queryKey: ["categories"],
+    queryFn: () => getCategories(),
+  });
+
   const handleCheckedItems = (values: string[]) => {
     console.log("Yang dicentang:", values);
+    if (!products) return;
+
+    const filter: iProduct[] = products.filter((item) =>
+      values.includes(item.category.name)
+    );
+    setDataSorted(filter);
   };
 
-  const handleChange = (option:string) => {
+  const handleCheckedRatings = (rating: number, checked: boolean) => {
+    const nextRatings = checked
+      ? [...selectedRatings, rating]
+      : selectedRatings.filter((r) => r !== rating);
+
+    setSelectedRatings(nextRatings);
+
+    const filter =
+      products?.filter((p) => nextRatings.includes(p.rating)) || [];
+
+    setDataSorted(filter);
+  };
+
+  const handleChange = (option: string) => {
     if (!products) return;
 
     const sorted: iProduct[] = [...products];
@@ -59,7 +86,7 @@ export default function CatalogPage() {
     setDataSorted(sorted);
   };
 
-  useEffect(() => {}, [selectedValue]);
+  useEffect(() => {}, [selectedValue, dataSorted]);
 
   if (isLoadingProducts) return <p>Loading...</p>;
 
@@ -80,7 +107,7 @@ export default function CatalogPage() {
                 </h4>
                 {/* checkbox list */}
                 <CheckboxAll
-                  items={["shoes", "clothes", "accessories"]}
+                  items={categories?.map((category) => category.name) ?? []}
                   onChange={handleCheckedItems}
                 />
               </div>
@@ -95,27 +122,52 @@ export default function CatalogPage() {
                 <div className="flex flex-col gap-2">
                   {/* rating list start here */}
                   <div className="flex items-center ">
-                    <Checkbox id="star5" />
+                    <Checkbox
+                      id="star5"
+                      onCheckedChange={(checked) =>
+                        handleCheckedRatings(5, checked === true)
+                      }
+                    />
                     <Star className="fill-[#FFAB0D] stroke-0 h-4 ml-1" />
                     <Label htmlFor="star5">5</Label>
                   </div>
                   <div className="flex items-center ">
-                    <Checkbox id="star4" />
+                    <Checkbox
+                      id="star4"
+                      onCheckedChange={(checked) =>
+                        handleCheckedRatings(4, checked === true)
+                      }
+                    />
                     <Star className="fill-[#FFAB0D] stroke-0 h-4 ml-1" />
                     <Label htmlFor="star4">4</Label>
                   </div>
                   <div className="flex items-center ">
-                    <Checkbox id="star3" />
+                    <Checkbox
+                      id="star3"
+                      onCheckedChange={(checked) =>
+                        handleCheckedRatings(3, checked === true)
+                      }
+                    />
                     <Star className="fill-[#FFAB0D] stroke-0 h-4 ml-1" />
                     <Label htmlFor="star3">3</Label>
                   </div>
                   <div className="flex items-center ">
-                    <Checkbox id="star2" />
+                    <Checkbox
+                      id="star2"
+                      onCheckedChange={(checked) =>
+                        handleCheckedRatings(2, checked === true)
+                      }
+                    />
                     <Star className="fill-[#FFAB0D] stroke-0 h-4 ml-1" />
                     <Label htmlFor="star2">2</Label>
                   </div>
                   <div className="flex items-center ">
-                    <Checkbox id="star1" />
+                    <Checkbox
+                      id="star1"
+                      onCheckedChange={(checked) =>
+                        handleCheckedRatings(1, checked === true)
+                      }
+                    />
                     <Star className="fill-[#FFAB0D] stroke-0 h-4 ml-1" />
                     <Label htmlFor="star1">1</Label>
                   </div>
