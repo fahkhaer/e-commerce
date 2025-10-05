@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Catalog() {
   const [visibleItems, setVisibleItems] = useState(16);
@@ -34,7 +35,7 @@ export default function Catalog() {
             {dataToDisplay?.map((item: iProduct) => (
               <div key={item.id} className="shadow-[0_0_20px_0_#CBCACA40]">
                 {/* product image */}
-                <div>
+                <Link href="/detail-product">
                   <Image
                     className="h-auto w-full"
                     src={item.images[0] || "productexample.png"}
@@ -42,20 +43,20 @@ export default function Catalog() {
                     width={100}
                     height={500}
                   />
-                </div>
+                </Link>
                 {/* product description */}
                 <div className="p-3 ">
                   <div className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block">
-                    {item.title}
+                    <Link href="/detail-product">{item.title}</Link>
                   </div>
                   <p className="text-sm md:text-base font-bold py-1">
-                    {item.price}
+                    Rp{item.price}
                   </p>
                   <div className="flex items-center">
                     <Star className="fill-[#FFAB0D] stroke-0 h-4" />
                     <div>
                       <span>{item.rating}</span>
-                      <span>{item.soldCount}</span>
+                      <span>・{item.soldCount} Sold</span>
                     </div>
                   </div>
                   <div className="flex items-center">
@@ -67,12 +68,11 @@ export default function Catalog() {
             ))}
           </div>
           {visibleItems < (data as iProduct[]).length && (
-            <div className="mt-4">
+            <div className="mt-6 flex justify-center">
               <Button
+                variant="outline"
                 onClick={loadMore}
-                className={cn(
-                  "px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-                )}
+                className={cn("px-4 py-2 w-55 hover:bg-accent transition")}
               >
                 Load More
               </Button>
