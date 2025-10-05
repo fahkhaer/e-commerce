@@ -219,6 +219,123 @@ export default function DetailProduct() {
             </div>
           </div>
         </div>
+
+        <div
+          id="relatedProdSection"
+          className="py-8 border-t border-neutral-300"
+        >
+          <h4 className="w-full text-xl md:text-[32px] font-bold mb-8">
+            Related Products
+          </h4>
+          <div
+            id="productListWrapper"
+            className="grid gap-5 grid-cols-2 md:grid-cols-4"
+          >
+            {/* item product */}
+            <div className="item-card">
+              <div>
+                <Image
+                  src="/productexample.png"
+                  alt="Product 5"
+                  width={300}
+                  height={300}
+                  className="w-full"
+                />
+              </div>
+              <div className="p-5">
+                <Link
+                  href="/detail-prod"
+                  className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
+                >
+                  Overshirt Utility
+                </Link>
+                <p className="text-base font-bold py-1">Rp. 375.000</p>
+                <p className="text-base flex gap-2">
+                  <Star className="fill-[#FFAB0D] stroke-0 h-4" />
+                  4.5
+                </p>
+              </div>
+            </div>
+
+            {/* item product */}
+            <div className="item-card">
+              <div>
+                <Image
+                  src="/productexample.png"
+                  alt="Product 6"
+                  width={300}
+                  height={300}
+                  className="w-full"
+                />
+              </div>
+              <div className="p-5">
+                <Link
+                  href="/detail-prod"
+                  className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
+                >
+                  Sweater Rajut Cable
+                </Link>
+                <p className="text-base font-bold py-1">Rp. 1.300.000</p>
+                <p className="text-base flex gap-2">
+                  <Star className="fill-[#FFAB0D] stroke-0 h-4" />
+                  4.8
+                </p>
+              </div>
+            </div>
+
+            {/* item product */}
+            <div className="item-card">
+              <div>
+                <Image
+                  src="/productexample.png"
+                  alt="Product 7"
+                  width={300}
+                  height={300}
+                  className="w-full"
+                />
+              </div>
+              <div className="p-5">
+                <Link
+                  href="/detail-prod"
+                  className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
+                >
+                  Syal Wol Kotak
+                </Link>
+                <p className="text-base font-bold py-1">Rp. 220.000</p>
+                <p className="text-base flex gap-2">
+                  <Star className="fill-[#FFAB0D] stroke-0 h-4" />
+                  4.9
+                </p>
+              </div>
+            </div>
+
+            {/* item product */}
+            <div className="item-card">
+              <div>
+                <Image
+                  src="/productexample.png"
+                  alt="Product 8"
+                  width={300}
+                  height={300}
+                  className="w-full"
+                />
+              </div>
+              <div className="p-5">
+                <Link
+                  href="/detail-prod"
+                  className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
+                >
+                  Syal Wol Solid
+                </Link>
+                <p className="text-base font-bold py-1">Rp. 180.000</p>
+                <p className="text-base flex gap-2">
+                  <Star className="fill-[#FFAB0D] stroke-0 h-4" />
+                  4.7
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </MainLayout>
     </>
   );

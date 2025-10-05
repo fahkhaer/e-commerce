@@ -9,13 +9,8 @@ import { Label } from "@/components/ui/label";
 import { StoreIcon, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import CheckboxAll from "@/components/ui/CheckboxAll";
 
 export default function CartPage() {
-  const handleCheckedItems = (values: string[]) => {
-    console.log("Yang dicentang:", values);
-  };
-
   return (
     <>
       <NavbarLoginUser />
@@ -27,8 +22,8 @@ export default function CartPage() {
               Cart
             </h1>
             <p>
-              ❗️posisi checkbox harusnya diatas ❗️model checkbox didalam Card
-              samain kayak "Select All"
+              {/* ❗️posisi checkbox harusnya diatas ❗️model checkbox didalam Card
+              samain kayak "Select All" */}
             </p>
             {/* put select all here */}
             {/* <CheckboxAll
@@ -38,7 +33,7 @@ export default function CartPage() {
             <div className="flex items-center gap-3 pb-8">
               <Checkbox id="all" />
               <Label htmlFor="all">Select All</Label>
-            </div>{" "}
+            </div>
             {/* product choosen start here */}
             {/* two items purchased */}
             <Card className="p-0 shadow-none">

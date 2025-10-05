@@ -56,7 +56,7 @@ export default function NavbarSeller() {
           variant="outline"
           className="w-fit rounded-full h-11 text-sm font-bold my-auto py-2 px-3 gap-2 bg-white border"
         >
-          <Link href="#" className="flex items-center gap-2 ">
+          <Link href="/seller-home" className="flex items-center gap-2 ">
             <Avatar>
               <AvatarImage
                 className="rounded-full h-8"
