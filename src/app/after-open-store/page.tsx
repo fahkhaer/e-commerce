@@ -16,7 +16,7 @@ export default function AfterOpenStore() {
         </div>
 
         {/* grid daftar produk */}
-        <Catalog></Catalog>
+        <Catalog product={undefined}/>
       </MainLayout>
     </>
   );

@@ -64,6 +64,7 @@ export default function OrderList() {
                     className="w-14 h-14 rounded-md object-cover"
                     width={100}
                     height={100}
+                    priority
                   />
                   <div>
                     <p className="font-medium">Sneakers Court Minimalis</p>
@@ -119,6 +120,7 @@ export default function OrderList() {
                     alt="Product"
                     width={100}
                     height={100}
+                    priority
                   />
                   <div>
                     <p className="font-medium">Sneakers Court Minimalis</p>

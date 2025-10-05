@@ -1,3 +1,5 @@
+"use client";
+
 import MainLayout from "@/components/layouts/MainLayout";
 import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,11 +15,37 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getProducts, getProductsById } from "@/services/products";
+import { iProduct } from "@/types/product.interface";
+import { useQuery } from "@tanstack/react-query";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function DetailProduct() {
+  const params = useParams();
+  const { id } = params;
+
+  const { data: products, isLoading: isLoadingProducts } = useQuery<iProduct[]>(
+    {
+      queryKey: ["products"],
+      queryFn: () => getProducts(),
+    }
+  );
+
+  const { data: product, isLoading: isLoadingProduct } = useQuery<iProduct>({
+    queryKey: ["product", id],
+    queryFn: () => getProductsById(Number(id)),
+    enabled: !!id,
+  });
+
+  if (isLoadingProduct) return <p>Loading...</p>;
+
+  const relatedProducts = products?.filter(
+    (item) => item.category.name === product?.category.name
+  );
+
   return (
     <>
       <NavbarLoginUser />
@@ -52,32 +80,27 @@ export default function DetailProduct() {
             <div className="w-full md:w-1/3 rounded-xl overflow-hidden">
               <div id="imageProdMain" className="rounded-xl overflow-hidden">
                 <Image
-                  src="/productexample.png"
+                  src={"/productexample.png"}
                   alt="Product 1"
                   width={400}
                   height={400}
                   className="rounded-xl"
+                  priority
                 />
               </div>
-
               <div
                 id="thumbProductWrapper"
                 className="flex w-full overflow-hidden gap-2 pt-5"
               >
-                {[
-                  "BRI.png",
-                  "BNI.png",
-                  "BCA.png",
-                  "Mandiri.png",
-                  "Hero.png",
-                ].map((img, i) => (
+                {product?.images.map((item, i) => (
                   <Link
                     key={i}
                     href="#"
                     className="group hover:border-2 hover:border-neutral-950 hover:rounded-2xl"
                   >
                     <Image
-                      src={`/${img}`}
+                    priority
+                      src={item}
                       alt={`Product ${i + 1}`}
                       width={72}
                       height={72}
@@ -92,14 +115,14 @@ export default function DetailProduct() {
             <div className="w-full md:w-2/3">
               <div className="w-full border-neutral-300 border-b">
                 <h4 className="text-base md:text-xl font-semibold">
-                  Sneakers Court Minimalis
+                  {product?.title}
                 </h4>
                 <p className="text-xl md:text-[32px] font-bold py-2">
-                  Rp. 275.000
+                  {product?.price}
                 </p>
                 <p className="text-sm md:text-lg font-semibold flex gap-2 mb-5">
                   <Star className="fill-[#FFAB0D] stroke-0 h-4 ml-1" />
-                  <Label htmlFor="star4.9">4.9</Label>
+                  <Label htmlFor="star4.9">{product?.rating}</Label>
                 </p>
               </div>
 
@@ -127,13 +150,9 @@ export default function DetailProduct() {
                         Sneakers Court Minimalis – Ivory Beige
                       </span>
                       <br />
-                      Sepatu sneakers bergaya minimalis dengan kombinasi warna
-                      ivory dan beige yang elegan. Terbuat dari material kulit
-                      sintetis berkualitas dengan sentuhan suede halus di bagian
-                      panel samping dan depan.
+                      {product?.description}
                     </p>
                     <br />
-
                     <ul className="list-disc pl-6 space-y-1">
                       <li>
                         <span className="font-semibold">Desain:</span> Low-top
@@ -188,7 +207,6 @@ export default function DetailProduct() {
               {/* Quantity section */}
               <div className="flex items-center gap-10 py-5">
                 <p className="text-base font-semibold">Quantity</p>
-
                 <div className="flex items-center border border-neutral-300 rounded-xl px-4 py-2 w-fit">
                   <Button
                     variant="ghost"
@@ -335,109 +353,38 @@ export default function DetailProduct() {
             id="productListWrapper"
             className="grid gap-5 grid-cols-2 md:grid-cols-4"
           >
+            {isLoadingProducts ? (
+              <p>Loading...</p>
+            ) : (
+              relatedProducts?.map((item) => (
+                <div key={item.id} className="item-card" >
+                  <div>
+                    <Image
+                      src={item.images[0] || "/productexample.png"}
+                      alt="Product 5"
+                      width={300}
+                      height={300}
+                      className="w-full"
+                      priority
+                    />
+                  </div>
+                  <div className="p-5">
+                    <Link
+                      href="/detail-prod"
+                      className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
+                    >
+                      {item.title}
+                    </Link>
+                    <p className="text-base font-bold py-1">{item.price}</p>
+                    <p className="text-base flex gap-2">
+                      <Star className="fill-[#FFAB0D] stroke-0 h-4" />
+                      {item.rating}
+                    </p>
+                  </div>
+                </div>
+              ))
+            )}
             {/* item product */}
-            <div className="item-card">
-              <div>
-                <Image
-                  src="/productexample.png"
-                  alt="Product 5"
-                  width={300}
-                  height={300}
-                  className="w-full"
-                />
-              </div>
-              <div className="p-5">
-                <Link
-                  href="/detail-prod"
-                  className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
-                >
-                  Overshirt Utility
-                </Link>
-                <p className="text-base font-bold py-1">Rp. 375.000</p>
-                <p className="text-base flex gap-2">
-                  <Star className="fill-[#FFAB0D] stroke-0 h-4" />
-                  4.5
-                </p>
-              </div>
-            </div>
-
-            {/* item product */}
-            <div className="item-card">
-              <div>
-                <Image
-                  src="/productexample.png"
-                  alt="Product 6"
-                  width={300}
-                  height={300}
-                  className="w-full"
-                />
-              </div>
-              <div className="p-5">
-                <Link
-                  href="/detail-prod"
-                  className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
-                >
-                  Sweater Rajut Cable
-                </Link>
-                <p className="text-base font-bold py-1">Rp. 1.300.000</p>
-                <p className="text-base flex gap-2">
-                  <Star className="fill-[#FFAB0D] stroke-0 h-4" />
-                  4.8
-                </p>
-              </div>
-            </div>
-
-            {/* item product */}
-            <div className="item-card">
-              <div>
-                <Image
-                  src="/productexample.png"
-                  alt="Product 7"
-                  width={300}
-                  height={300}
-                  className="w-full"
-                />
-              </div>
-              <div className="p-5">
-                <Link
-                  href="/detail-prod"
-                  className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
-                >
-                  Syal Wol Kotak
-                </Link>
-                <p className="text-base font-bold py-1">Rp. 220.000</p>
-                <p className="text-base flex gap-2">
-                  <Star className="fill-[#FFAB0D] stroke-0 h-4" />
-                  4.9
-                </p>
-              </div>
-            </div>
-
-            {/* item product */}
-            <div className="item-card">
-              <div>
-                <Image
-                  src="/productexample.png"
-                  alt="Product 8"
-                  width={300}
-                  height={300}
-                  className="w-full"
-                />
-              </div>
-              <div className="p-5">
-                <Link
-                  href="/detail-prod"
-                  className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
-                >
-                  Syal Wol Solid
-                </Link>
-                <p className="text-base font-bold py-1">Rp. 180.000</p>
-                <p className="text-base flex gap-2">
-                  <Star className="fill-[#FFAB0D] stroke-0 h-4" />
-                  4.7
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </MainLayout>

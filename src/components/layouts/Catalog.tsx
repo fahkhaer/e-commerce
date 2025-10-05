@@ -9,8 +9,15 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function Catalog() {
+interface CatalogProps {
+  product: iProduct[] | undefined;
+}
+
+export default function Catalog({product} : CatalogProps) {
+  const router = useRouter();
+
   const [visibleItems, setVisibleItems] = useState(16);
 
   const { data, isLoading } = useQuery<iProduct[]>({
@@ -22,9 +29,14 @@ export default function Catalog() {
     setVisibleItems((prev) => prev + 16);
   };
 
-  const dataToDisplay = Array.isArray(data) ? data.slice(0, visibleItems) : [];
+  const dataToDisplay = Array.isArray(product)
+    ? product.slice(0, visibleItems)
+    : Array.isArray(data)
+    ? data.slice(0, visibleItems)
+    : [];
 
   if (isLoading) return <p>Loading...</p>;
+
   return (
     <>
       {/* grid daftar produk */}
@@ -33,17 +45,20 @@ export default function Catalog() {
           <div className="grid gap-5 grid-cols-2 md:grid-cols-4">
             {/* put card product here */}
             {dataToDisplay?.map((item: iProduct) => (
-              <div key={item.id} className="shadow-[0_0_20px_0_#CBCACA40]">
+              <div
+                key={item.id}
+                className="shadow-[0_0_20px_0_#CBCACA40]"
+                onClick={() => router.push(`/detail-product/${item.id}`)}
+              >
                 {/* product image */}
-                <Link href="/detail-product">
-                  <Image
-                    className="h-auto w-full"
-                    src={item.images[0] || "productexample.png"}
-                    alt="productexample.png"
-                    width={100}
-                    height={500}
-                  />
-                </Link>
+                <Image
+                  className="h-auto w-full"
+                  src={item.images[0] || "productexample.png"}
+                  alt="productexample.png"
+                  width={100}
+                  height={500}
+                  priority
+                />
                 {/* product description */}
                 <div className="p-3 ">
                   <div className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block">

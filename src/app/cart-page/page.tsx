@@ -60,6 +60,7 @@ export default function CartPage() {
                       width={80}
                       height={80}
                       className="rounded-xl"
+                      priority
                     />
                     <div className="grid gap-1.5 font-normal">
                       <p className="text-sm leading-none font-medium">
@@ -108,6 +109,7 @@ export default function CartPage() {
                       width={80}
                       height={80}
                       className="rounded-xl"
+                      priority
                     />
                     <div className="grid gap-1.5 font-normal">
                       <p className="text-sm leading-none font-medium">
@@ -169,6 +171,7 @@ export default function CartPage() {
                       width={80}
                       height={80}
                       className="rounded-xl"
+                      priority
                     />
                     <div className="grid gap-1.5 font-normal">
                       <p className="text-sm leading-none font-medium">
