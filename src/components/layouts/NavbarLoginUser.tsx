@@ -21,7 +21,7 @@ export default function NavbarLoginUser() {
         >
           {" "}
           <Link
-            href="/catalog"
+            href="/catalog-page"
             className="flex items-center gap-1.5 px-2 font-normal text-sm"
           >
             <LayoutGrid />
@@ -38,7 +38,9 @@ export default function NavbarLoginUser() {
       </div>
 
       <div className="flex gap-3 pl-10 items-baseline">
-        <ShoppingCart className="shrink-0" />
+        <Link href="/cart-page">
+          <ShoppingCart className="shrink-0" />
+        </Link>{" "}
         <Button
           variant="outline"
           className="w-fit rounded-full h-11 text-sm font-bold ml-4 bg-white border"
@@ -48,7 +50,6 @@ export default function NavbarLoginUser() {
             Open Store
           </Link>
         </Button>
-
         <Button
           variant="outline"
           className="w-fit rounded-full h-11 text-sm font-bold my-auto py-2 px-3 gap-2 bg-white border"

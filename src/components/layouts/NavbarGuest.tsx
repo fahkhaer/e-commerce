@@ -20,7 +20,7 @@ export default function NavbarGuest() {
         >
           {" "}
           <Link
-            href="./catalog"
+            href="./catalog-page"
             className="flex items-center gap-1.5 px-2 font-normal text-sm"
           >
             <LayoutGrid />
@@ -36,7 +36,9 @@ export default function NavbarGuest() {
         </Command>
       </div>
 
-      <ShoppingCart className="shrink-0" />
+      <Link href="/cart-page">
+        <ShoppingCart className="shrink-0" />
+      </Link>
 
       <div className="flex gap-3 items-baseline">
         <Link
