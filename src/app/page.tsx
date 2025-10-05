@@ -16,7 +16,7 @@ export default function Home() {
           </h2>
         </div>
         {/* grid daftar produk */}
-        <Catalog />
+        <Catalog product={undefined}/>
       </MainLayout>
     </>
   );

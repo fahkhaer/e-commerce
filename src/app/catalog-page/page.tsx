@@ -15,11 +15,53 @@ import {
 } from "@/components/ui/select";
 import Catalog from "@/components/layouts/Catalog";
 import CheckboxAll from "@/components/ui/CheckboxAll";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "@/services/products";
+import { iProduct } from "@/types/product.interface";
+import { useEffect, useState } from "react";
 
 export default function CatalogPage() {
+  const [selectedValue, setSelectedValue] = useState("most-popular");
+  const [dataSorted, setDataSorted] = useState<iProduct[]>();
+
+  const { data: products, isLoading: isLoadingProducts } = useQuery<iProduct[]>(
+    {
+      queryKey: ["products"],
+      queryFn: () => getProducts(),
+    }
+  );
+
   const handleCheckedItems = (values: string[]) => {
     console.log("Yang dicentang:", values);
   };
+
+  const handleChange = () => {
+    if (!products) return;
+
+    const sorted: iProduct[] = [...products];
+
+    switch (selectedValue) {
+      case "most-popular":
+        sorted.sort((a, b) => b.soldCount - a.soldCount);
+        break;
+      case "top-rated":
+        sorted.sort((a, b) => b.rating - a.rating);
+        break;
+      case "highest-price":
+        sorted.sort((a, b) => b.price - a.price);
+        break;
+      case "lowest-price":
+        sorted.sort((a, b) => a.price - b.price);
+        break;
+      default:
+        break;
+    }
+    setDataSorted(sorted);
+  };
+
+  useEffect(() => {}, [selectedValue]);
+
+  if (isLoadingProducts) return <p>Loading...</p>;
 
   return (
     <>
@@ -41,7 +83,6 @@ export default function CatalogPage() {
                   items={["shoes", "clothes", "accessories"]}
                   onChange={handleCheckedItems}
                 />
-              
               </div>
               <hr className="mb-5 text-neutral-300" />
               <div className="px-5">
@@ -85,7 +126,7 @@ export default function CatalogPage() {
             <div className="w-full md:w-4/5">
               <div className="grid grid-cols-2 gap-5 md:flex md:gap-0 justify-between items-center">
                 <p className="text-base col-span-2">
-                  Showing 160 products ❗️perbaiki pb
+                  Showing {products?.length} products ❗️perbaiki pb
                 </p>
 
                 {/* filter for mobile design */}
@@ -102,17 +143,22 @@ export default function CatalogPage() {
                 </div>
                 <div className="flex gap-3 items-center">
                   <p className="text-base font-bold hidden md:block">Sort</p>
-                  <Select defaultValue="latest">
+                  <Select
+                    value={selectedValue}
+                    onValueChange={(value) => {
+                      setSelectedValue(value); // update state selectedValue
+                      handleChange(); // panggil fungsi sort/filter sesuai value
+                    }}
+                  >
                     <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Latest" />
+                      <SelectValue placeholder="Most Popular" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem value="latest">Latest</SelectItem>
                         <SelectItem value="most-popular">
                           Most Popular
                         </SelectItem>
-                        <SelectItem value="to-rated">Top Rated</SelectItem>
+                        <SelectItem value="top-rated">Top Rated</SelectItem>
                         <SelectItem value="highest-price">
                           Highest Price
                         </SelectItem>
@@ -126,8 +172,7 @@ export default function CatalogPage() {
               </div>
               {/* grid catalog start here*/}
               <div>
-                {" "}
-                <Catalog />
+                <Catalog product={dataSorted} />
               </div>
             </div>
           </div>
