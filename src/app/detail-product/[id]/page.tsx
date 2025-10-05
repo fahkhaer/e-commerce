@@ -99,7 +99,7 @@ export default function DetailProduct() {
                     className="group hover:border-2 hover:border-neutral-950 hover:rounded-2xl"
                   >
                     <Image
-                    priority
+                      priority
                       src={item}
                       alt={`Product ${i + 1}`}
                       width={72}
@@ -245,101 +245,40 @@ export default function DetailProduct() {
 
           <div className="flex items-center gap-2">
             <Star className="text-yellow-500 fill-yellow-500" size={20} />
-            <p className="font-semibold text-lg">4.9</p>
+            <p className="font-semibold text-lg">{product?.rating}</p>
             <p className="text-sm text-muted-foreground">/5.0</p>
           </div>
-
-          {/* Review 1 */}
-          <div>
-            <div className="flex items-start gap-4">
-              <Avatar>
-                <AvatarImage src="https://i.pravatar.cc/150?img=3" />
-                <AvatarFallback>J</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-medium">John Doe</p>
-                <p className="text-sm text-muted-foreground">
-                  25 August 2025, 13:38
-                </p>
-                <div className="flex mt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className="text-yellow-500 fill-yellow-500"
-                    />
-                  ))}
+          {product?.reviews.map((item, i) => (
+            <div key={i}>
+              <div className="flex items-start gap-4">
+                <Avatar>
+                  <AvatarImage src={item ??"https://i.pravatar.cc/150?img=3" }/>
+                  <AvatarFallback>J</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-medium">John Doe</p>
+                  <p className="text-sm text-muted-foreground">
+                    25 August 2025, 13:38
+                  </p>
+                  <div className="flex mt-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={16}
+                        className="text-yellow-500 fill-yellow-500"
+                      />
+                    ))}
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    Lorem ipsum dolor sit amet consectetur. Pulvinar porttitor
+                    aliquam viverra nunc sed facilisis. Integer tristique nullam
+                    morbi mauris ante.
+                  </p>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Lorem ipsum dolor sit amet consectetur. Pulvinar porttitor
-                  aliquam viverra nunc sed facilisis. Integer tristique nullam
-                  morbi mauris ante.
-                </p>
               </div>
+              <Separator className="my-6" />
             </div>
-            <Separator className="my-6" />
-          </div>
-
-          {/* Review 2 */}
-          <div>
-            <div className="flex items-start gap-4">
-              <Avatar>
-                <AvatarImage src="https://i.pravatar.cc/150?img=5" />
-                <AvatarFallback>J</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-medium">John Doe</p>
-                <p className="text-sm text-muted-foreground">
-                  25 August 2025, 13:38
-                </p>
-                <div className="flex mt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className="text-yellow-500 fill-yellow-500"
-                    />
-                  ))}
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Lorem ipsum dolor sit amet consectetur. Pulvinar porttitor
-                  aliquam viverra nunc sed facilisis. Integer tristique nullam
-                  morbi mauris ante.
-                </p>
-              </div>
-            </div>
-            <Separator className="my-6" />
-          </div>
-
-          {/* Review 3 */}
-          <div>
-            <div className="flex items-start gap-4">
-              <Avatar>
-                <AvatarImage src="https://i.pravatar.cc/150?img=7" />
-                <AvatarFallback>J</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-medium">John Doe</p>
-                <p className="text-sm text-muted-foreground">
-                  25 August 2025, 13:38
-                </p>
-                <div className="flex mt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className="text-yellow-500 fill-yellow-500"
-                    />
-                  ))}
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Lorem ipsum dolor sit amet consectetur. Pulvinar porttitor
-                  aliquam viverra nunc sed facilisis. Integer tristique nullam
-                  morbi mauris ante.
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
         {/* Related Product start here */}
         <div
@@ -357,7 +296,7 @@ export default function DetailProduct() {
               <p>Loading...</p>
             ) : (
               relatedProducts?.map((item) => (
-                <div key={item.id} className="item-card" >
+                <div key={item.id} className="item-card">
                   <div>
                     <Image
                       src={item.images[0] || "/productexample.png"}

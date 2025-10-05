@@ -20,4 +20,5 @@ export interface iProduct {
     logo: string | null;
   };
   description: string
+  reviews: string[]
 }
