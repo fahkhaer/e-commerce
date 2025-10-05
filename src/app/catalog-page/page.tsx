@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/select";
 import Catalog from "@/components/layouts/Catalog";
 import CheckboxAll from "@/components/ui/CheckboxAll";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 export default function CatalogPage() {
   const handleCheckedItems = (values: string[]) => {
@@ -41,13 +43,52 @@ export default function CatalogPage() {
                   items={["shoes", "clothes", "accessories"]}
                   onChange={handleCheckedItems}
                 />
-              
               </div>
               <hr className="mb-5 text-neutral-300" />
               <div className="px-5">
                 <h4 className="text-base font-semibold mb-2">Price</h4>
-                <div className="space-y-2">input harga disini❗️</div>
+
+                <div className="grid gap-2">
+                  <div className="relative">
+                    {/* Badge di dalam input */}
+                    <Badge
+                      variant="secondary"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 h-9 font-semibold flex items-center justify-center"
+                    >
+                      Rp
+                    </Badge>
+
+                    <Input
+                      className="h-12 pl-12 my-1"
+                      id="minimum-price"
+                      type="text"
+                      placeholder="Minimum Price"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-2">
+                  <div className="relative">
+                    {/* Badge di dalam input */}
+                    <Badge
+                      variant="secondary"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 h-9 font-semibold flex items-center justify-center"
+                    >
+                      Rp
+                    </Badge>
+
+                    <Input
+                      className="h-12 pl-12 my-1"
+                      id="minimum-price"
+                      type="text"
+                      placeholder="Maximum Price"
+                      required
+                    />
+                  </div>
+                </div>
               </div>
+
               <hr className="mt-5 text-neutral-300"></hr>
               <div className="p-5">
                 <h4 className="text-base font-semibold mb-2.5">Rating</h4>
