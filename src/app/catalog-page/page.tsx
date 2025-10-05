@@ -178,7 +178,7 @@ export default function CatalogPage() {
             <div className="w-full md:w-4/5">
               <div className="grid grid-cols-2 gap-5 md:flex md:gap-0 justify-between items-center">
                 <p className="text-base col-span-2">
-                  Showing {products?.length} products ❗️perbaiki pb
+                  Showing {dataSorted?.length ?? products?.length} products ❗️perbaiki pb
                 </p>
 
                 {/* filter for mobile design */}
