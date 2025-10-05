@@ -1,6 +1,4 @@
-//hasil copy dari coach Fauzi"
 
-// import { apiClient } from "@/lib/api-client";
 // import {
 //   LoginRequest,
 //   LoginResponse,
@@ -8,6 +6,8 @@
 //   MeResponse,
 //   UpdateProfileRequest,
 // } from "@/types/api";
+
+import { apiClient } from "@/lib/api-clients";
 
 // export const authApi = {
 //   // POST /api/auth/register
@@ -43,3 +43,11 @@
 //     return apiClient.patch<MeResponse>("/api/me", data);
 //   },
 // };
+
+export const loginApi = async (email: string, password: string): Promise<AuthResponse> => {    
+  const { data } = await apiClient.post("/auth/login", { email, password });
+  return {
+    token: data.token,
+    user: data.user,
+  };
+};
