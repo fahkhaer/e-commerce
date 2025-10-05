@@ -1,3 +1,5 @@
+"use client";
+
 import MainLayout from "@/components/layouts/MainLayout";
 import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,8 +14,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Catalog from "@/components/layouts/Catalog";
+import CheckboxAll from "@/components/ui/CheckboxAll";
 
 export default function CatalogPage() {
+  const handleCheckedItems = (values: string[]) => {
+    console.log("Yang dicentang:", values);
+  };
+
   return (
     <>
       <NavbarLoginUser />
@@ -26,30 +33,15 @@ export default function CatalogPage() {
             <div className="hidden md:flex flex-col w-1/5 border border-neutral-300 rounded-2xl">
               <div className="p-5 ">
                 <h3 className="text-base font-bold mb-2">FILTER</h3>
-                <h4 className="text-base font-semibold mb-2">Categories</h4>
+                <h4 className="text-base font-semibold mb-2">
+                  Categories-❗️px
+                </h4>
                 {/* checkbox list */}
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-3 ">
-                    <Checkbox id="all" />
-                    <Label htmlFor="all">All</Label>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Checkbox id="shoes" />
-                    <Label htmlFor="shoes">Shoes</Label>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Checkbox id="clothes" />
-                    <Label htmlFor="clothes">Clothes</Label>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Checkbox id="accessories" />
-                    <Label htmlFor="accessories">Accessories</Label>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Checkbox id="accessories" />
-                    <Label htmlFor="accessories">Accessories</Label>
-                  </div>
-                </div>
+                <CheckboxAll
+                  items={["shoes", "clothes", "accessories"]}
+                  onChange={handleCheckedItems}
+                />
+              
               </div>
               <hr className="mb-5 text-neutral-300" />
               <div className="px-5">
