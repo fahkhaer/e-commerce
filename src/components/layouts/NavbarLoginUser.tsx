@@ -45,7 +45,7 @@ export default function NavbarLoginUser() {
           variant="outline"
           className="w-fit rounded-full h-11 text-sm font-bold ml-4 bg-white border"
         >
-          <Link href="#" className="flex items-center  gap-2 leading-none">
+          <Link href="/open-store" className="flex items-center  gap-2 leading-none">
             <Store className="size-5 fill " />
             Open Store
           </Link>
