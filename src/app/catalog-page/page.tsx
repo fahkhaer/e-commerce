@@ -35,12 +35,12 @@ export default function CatalogPage() {
     console.log("Yang dicentang:", values);
   };
 
-  const handleChange = () => {
+  const handleChange = (option:string) => {
     if (!products) return;
 
     const sorted: iProduct[] = [...products];
 
-    switch (selectedValue) {
+    switch (option) {
       case "most-popular":
         sorted.sort((a, b) => b.soldCount - a.soldCount);
         break;
@@ -147,7 +147,7 @@ export default function CatalogPage() {
                     value={selectedValue}
                     onValueChange={(value) => {
                       setSelectedValue(value); // update state selectedValue
-                      handleChange(); // panggil fungsi sort/filter sesuai value
+                      handleChange(value); // panggil fungsi sort/filter sesuai value
                     }}
                   >
                     <SelectTrigger className="w-[180px]">

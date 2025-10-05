@@ -15,7 +15,7 @@ interface CatalogProps {
   product: iProduct[] | undefined;
 }
 
-export default function Catalog(product : CatalogProps) {
+export default function Catalog({product} : CatalogProps) {
   const router = useRouter();
 
   const [visibleItems, setVisibleItems] = useState(16);
