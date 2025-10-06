@@ -1,11 +1,11 @@
-interface User {
+export interface User {
   id: number;
   name: string;
   email: string;
   avatarUrl: string;
 }
 
-interface AuthResponse {
+export interface AuthResponse {
   token: string;
   user: User;
 }

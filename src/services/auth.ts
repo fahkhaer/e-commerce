@@ -7,7 +7,9 @@
 //   UpdateProfileRequest,
 // } from "@/types/api";
 
-import { apiClient } from "@/lib/api-clients";
+import { AuthResponse } from "@/types/auth";
+
+// import { apiClient } from "@/lib/api-clients";
 
 // export const authApi = {
 //   // POST /api/auth/register
@@ -45,9 +47,21 @@ import { apiClient } from "@/lib/api-clients";
 // };
 
 export const loginApi = async (email: string, password: string): Promise<AuthResponse> => {    
-  const { data } = await apiClient.post("/auth/login", { email, password });
+  const res = await fetch("https://e-commerce-api-production-26ab.up.railway.app/api/auth/login", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    email,
+    password,
+  }),
+});
+const auth = await res.json()
+  // const { data } = await apiClient.post("/auth/login", { email: email, password: password });
+
+  localStorage.setItem("token", auth?.data.token);
+
   return {
-    token: data.token,
-    user: data.user,
+    token: auth?.data.token,
+    user: auth?.data.user,
   };
 };
