@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 const GuestNav = () => {
   return (
     <div className="flex gap-3 items-baseline">
+      <Link href="/login">
+        <ShoppingCart className="shrink-0" />
+      </Link>
       <Link
         href="/login"
         className={`${buttonVariants({ variant: "outline" })} md:w-36`}
@@ -44,6 +47,9 @@ const LoginNav = () => {
           Open Store
         </Link>
       </Button>
+      <Link href="/cart-page">
+        <ShoppingCart className="shrink-0" />
+      </Link>
       <Button
         variant="outline"
         className="w-fit rounded-full h-11 text-sm font-bold my-auto py-2 px-3 gap-2 bg-white border"
@@ -96,10 +102,6 @@ export default function Navbar() {
           />
         </Command>
       </div>
-
-      <Link href="/cart-page">
-        <ShoppingCart className="shrink-0" />
-      </Link>
       {token ? <LoginNav /> : <GuestNav />}
     </nav>
   );
