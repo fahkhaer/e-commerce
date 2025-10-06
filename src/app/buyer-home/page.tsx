@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import OrderListBuyer from "@/components/layouts/OrderListBuyer";
 import ReviewBuyerList from "@/components/layouts/ReviewBuyerList";
@@ -16,16 +15,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
-import MainLayout from "@/components/layouts/MainLayout";
-import {
-  FileText,
-  FileTextIcon,
-  LogOut,
-  LogOutIcon,
-  LogsIcon,
-  LucideLogOut,
-  Star,
-} from "lucide-react";
+import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function ReviewBuyer() {

@@ -31,7 +31,7 @@ const reviews: Review[] = [
       name: "Sneakers Court Minimalis",
       price: 100000,
       qty: 1,
-      image: "/sneakers.png",
+      image: "/productexample.png",
     },
     rating: 5,
     comment:
@@ -47,7 +47,7 @@ const reviews: Review[] = [
       name: "Sneakers Court Minimalis",
       price: 100000,
       qty: 1,
-      image: "/sneakers.png",
+      image: "/productexample.png",
     },
     rating: 4,
     comment:
@@ -63,7 +63,7 @@ const reviews: Review[] = [
       name: "Sneakers Court Minimalis",
       price: 100000,
       qty: 1,
-      image: "/sneakers.png",
+      image: "/productexample.png",
     },
     rating: 5,
     comment:
@@ -79,9 +79,9 @@ export default function ReviewBuyerList() {
   );
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gray-50">
       {/* Content */}
-      <main className="flex-1 p-6 bg-gray-50">
+      <main className="flex-1 p-6 ">
         <h1 className="text-2xl font-bold mb-6">Review</h1>
 
         {/* Search */}
@@ -154,5 +154,6 @@ export default function ReviewBuyerList() {
         </div>
       </main>
     </div>
+    // <NoReview/> // if nothing review
   );
 }

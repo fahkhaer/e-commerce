@@ -101,7 +101,9 @@ export default function Navbar() {
             placeholder="Search..."
           />
         </Command>
+
       </div>
+      
       {token ? <LoginNav /> : <GuestNav />}
     </nav>
   );
