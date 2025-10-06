@@ -80,7 +80,7 @@ export default function DetailProduct() {
             <div className="w-full md:w-1/3 rounded-xl overflow-hidden">
               <div id="imageProdMain" className="rounded-xl overflow-hidden">
                 <Image
-                  src={"/productexample.png"}
+                  src={product?.images[0] || "/productexample.png"}
                   alt="Product 1"
                   width={400}
                   height={400}
@@ -92,7 +92,9 @@ export default function DetailProduct() {
                 id="thumbProductWrapper"
                 className="flex w-full overflow-hidden gap-2 pt-5"
               >
-                {product?.images.map((item, i) => (
+                {product?.images.map((item, i) =>{
+                  const img = item == 'string' ? "/productexample.png" : item
+                  return(
                   <Link
                     key={i}
                     href="#"
@@ -100,14 +102,15 @@ export default function DetailProduct() {
                   >
                     <Image
                       priority
-                      src={item}
+                      src={img}
                       alt={`Product ${i + 1}`}
                       width={72}
                       height={72}
                       className="w-[72px] rounded-2xl group-hover:scale-95 transition duration-500"
                     />
                   </Link>
-                ))}
+                  )
+                })}
               </div>
             </div>
 
