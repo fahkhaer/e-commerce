@@ -10,10 +10,10 @@ export default function HeroImage() {
       >
         <div className="flex-shrink-0 w-1/2 md:w-1/3 flex justify-center md:mb-0">
           <Image
-            className="h-64 md:h-72 object-cover rounded-lg"
+            className=" md:h-72 object-cover rounded-lg w-auto h-auto"
             src="/hero.png"
             alt=""
-            width={400}
+            width={100}
             height={100}
             priority
           />
