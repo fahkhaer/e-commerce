@@ -6,11 +6,26 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { getCart } from "@/services/cart";
+import { CartResponse } from "@/types/product.interface";
+import { useQuery } from "@tanstack/react-query";
 import { StoreIcon, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function CartPage() {
+    const { data, isLoading, error } = useQuery<CartResponse, Error>({
+    queryKey: ["cart"],
+    queryFn: getCart,
+    staleTime: 1000 * 60 * 5, // cache 5 menit
+  });
+
+  if (isLoading) return <div>Loading cart...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  console.log(data);
+  
+
   return (
     <>
       <NavbarLoginUser />
