@@ -32,9 +32,6 @@ const GuestNav = () => {
 const LoginNav = () => {
   return (
     <div className="flex gap-3 pl-10 items-baseline">
-      <Link href="/cart-page">
-        <ShoppingCart className="shrink-0" />
-      </Link>{" "}
       <Button
         variant="outline"
         className="w-fit rounded-full h-11 text-sm font-bold ml-4 bg-white border"
@@ -66,10 +63,10 @@ const LoginNav = () => {
 };
 
 export default function Navbar() {
-  const [token, setToken] =useState<string | null>()
+  const [token, setToken] = useState<string | null>();
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setToken(token)
+    setToken(token);
   }, []);
 
   return (
@@ -103,7 +100,7 @@ export default function Navbar() {
       <Link href="/cart-page">
         <ShoppingCart className="shrink-0" />
       </Link>
-      {token ? <LoginNav/> : <GuestNav/>}
+      {token ? <LoginNav /> : <GuestNav />}
     </nav>
   );
 }
