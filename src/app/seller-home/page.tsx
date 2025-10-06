@@ -17,10 +17,10 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
-import Reviews from "@/components/layouts/Reviews";
+import Reviews from "@/components/layouts/ReviewSeller";
 import StoreSettings from "@/components/layouts/StoreSettings";
 import { ProductsList } from "@/components/layouts/ProductsList";
-import OrderList from "@/components/layouts/OrderList";
+import OrderList from "@/components/layouts/OrderListSeller";
 
 export default function SellerHome() {
   const [open, setOpen] = useState(true);
@@ -200,6 +200,7 @@ export default function SellerHome() {
             <>
               <h1 className="text-2xl font-bold">Order List</h1>
               <OrderList />
+              
             </>
           )}
           {active === "reviews" && (
