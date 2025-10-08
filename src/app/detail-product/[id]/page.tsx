@@ -62,7 +62,7 @@ export default function DetailProduct() {
     <>
       <Navbar />
       <MainLayout>
-        <div id="prodDetailTop" className="pb-12 mt-1">
+        <div id="prodDetailTop" className="pb-6 md:mt-1 mt-6">
           {/* Breadcrumb */}
           <Breadcrumb>
             <BreadcrumbList className="font-bold text-black text-md">
@@ -138,7 +138,9 @@ export default function DetailProduct() {
               <Tabs>
                 <div className="text-sm md:text-base py-5 space-y-4">
                   <p className="leading-7.5">
-                    <span className="font-semibold mb-1 block">Deskripsi</span>
+                    <span className="font-bold md:font-semibold mb-1 block">
+                      Deskripsi
+                    </span>
                     {product?.description}
                   </p>
                 </div>
@@ -167,8 +169,8 @@ export default function DetailProduct() {
               {/* Quantity */}
               <div className="flex items-center justify-between py-5">
                 <div className="flex items-center gap-6">
-                  <p className="text-base font-semibold">Quantity</p>
-                  <div className="flex items-center border border-neutral-300 rounded-xl px-4 py-2 w-fit">
+                  <p className="text-sm md:text-base font-semibold">Quantity</p>
+                  <div className="flex items-center border border-neutral-300 rounded-xl px-4 py-2 h-11.5 w-fit">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -202,8 +204,8 @@ export default function DetailProduct() {
         </div>
 
         {/* Reviews */}
-        <div className="space-y-6 p-6 border-t">
-          <h2 className="text-3xl font-semibold">Product Reviews</h2>
+        <div className="space-y-6 py-6 border-t">
+          <h4 className="text-3xl font-bold">Product Reviews</h4>
           <div className="flex items-center gap-2">
             <Star className="text-yellow-500 fill-yellow-500" size={28.5} />
             <p className="font-semibold text-lg">{product?.rating}</p>
@@ -242,16 +244,19 @@ export default function DetailProduct() {
               <Separator className="my-6" />
             </div>
           ))}
+          <div className="flex justify-center">
+            <Button
+              variant="outline"
+              className={"px-4 py-2 w-55 hover:bg-accent transition"}
+            >
+              Load More
+            </Button>
+          </div>
         </div>
 
         {/* Related products */}
-        <div
-          id="relatedProdSection"
-          className="py-8 border-t border-neutral-300"
-        >
-          <h4 className="w-full text-xl md:text-[32px] font-bold mb-8">
-            Related Products
-          </h4>
+        <div className="pt-8 border-t border-neutral-300">
+          <h4 className="text-3xl font-bold mb-6">Related Product</h4>
           <div className="grid gap-5 grid-cols-2 md:grid-cols-4">
             {isLoadingProducts ? (
               <p>Loading...</p>
