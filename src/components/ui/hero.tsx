@@ -4,11 +4,16 @@ import { Button } from "./button";
 export default function HeroImage() {
   return (
     <>
+<<<<<<< Updated upstream
       <div
         id="containerNewCollection"
         className="flex items-center w-full bg-[#F3D7A4] rounded-[16px] shadow-md gap-4"
       >
         <div className="flex-shrink-0 w-1/2 md:w-1/3 flex justify-center md:mb-0">
+=======
+      <div className="flex items-center w-full bg-[#F3D7A4] rounded-[16px] px-3 shadow-md gap-4 sm:pt-3">
+        <div className="flex-shrink-0 w-1/2 md:w-1/3 flex justify-center  md:mb-0">
+>>>>>>> Stashed changes
           <Image
             className="h-64 md:h-72 object-cover rounded-lg"
             src="/hero.png"

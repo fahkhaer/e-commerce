@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { addCart } from "@/services/cart";
 import { getProducts, getProductsById } from "@/services/products";
 import { iProduct } from "@/types/product.interface";
 import { useQuery } from "@tanstack/react-query";
@@ -25,7 +26,7 @@ import { useParams } from "next/navigation";
 
 export default function DetailProduct() {
   const params = useParams();
-  const { id } = params;
+  const { id } = params; //id product
 
   const { data: products, isLoading: isLoadingProducts } = useQuery<iProduct[]>(
     {
@@ -45,6 +46,7 @@ export default function DetailProduct() {
   const relatedProducts = products?.filter(
     (item) => item.category.name === product?.category.name
   );
+  addCart(1,1)
 
   return (
     <>
@@ -212,6 +214,7 @@ export default function DetailProduct() {
                     variant="ghost"
                     size="sm"
                     className="text-lg font-bold px-2"
+                    //click
                   >
                     -
                   </Button>

@@ -6,17 +6,19 @@ import HeroImage from "@/components/ui/hero";
 export default function Home() {
   return (
     <>
+<<<<<<< Updated upstream
       <NavbarGuest></NavbarGuest>
+=======
+      <Navbar />
+>>>>>>> Stashed changes
       <MainLayout>
         <HeroImage />
-
         <div className="w-full mt-10">
           <h2 className="text-2xl md:text-4xl font-bold text-neutral-950">
             Featured Product
           </h2>
         </div>
-        {/* grid daftar produk */}
-        <Catalog product={undefined}/>
+        <Catalog product={undefined} />
       </MainLayout>
     </>
   );
