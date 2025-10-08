@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import MainLayout from "@/components/layouts/MainLayout";
 import Navbar from "@/components/layouts/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs } from "@/components/ui/tabs";
 import { addCart } from "@/services/cart";
 import { getProducts, getProductsById } from "@/services/products";
 import { iProduct } from "@/types/product.interface";
@@ -26,7 +27,11 @@ import { useParams } from "next/navigation";
 
 export default function DetailProduct() {
   const params = useParams();
-  const { id } = params; //id product
+  const { id } = params; // id product
+  const [quantity, setQuantity] = useState<number>(1);
+
+  const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  const handleIncrease = () => setQuantity((prev) => prev + 1);
 
   const { data: products, isLoading: isLoadingProducts } = useQuery<iProduct[]>(
     {
@@ -46,102 +51,100 @@ export default function DetailProduct() {
   const relatedProducts = products?.filter(
     (item) => item.category.name === product?.category.name
   );
-  addCart(1, 1);
+
+  const handleAddToCart = async () => {
+    if (!product) return;
+    await addCart(product.id, quantity);
+    alert(`Added ${quantity} item(s) of ${product.title} to cart!`);
+  };
 
   return (
     <>
       <Navbar />
       <MainLayout>
         <div id="prodDetailTop" className="pb-12 mt-1">
-          {/* Breadcrumb section */}
-          <div>
-            <Breadcrumb>
-              <BreadcrumbList className="font-bold text-black text-md">
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/">Home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/detail-product">Detail</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Sneakers Court Minimalis</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
+          {/* Breadcrumb */}
+          <Breadcrumb>
+            <BreadcrumbList className="font-bold text-black text-md">
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/detail-product">Detail</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{product?.title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
 
-          {/* product detail section */}
+          {/* Product detail */}
           <div className="flex flex-col md:flex-row gap-5 mt-5 items-start">
-            {/* product image left */}
+            {/* Left image */}
             <div className="w-full md:w-1/3 rounded-xl overflow-hidden">
-              <div id="imageProdMain" className="rounded-xl overflow-hidden">
+              <div className="rounded-xl overflow-hidden">
                 <Image
                   src={product?.images[0] || "/imagecorrupt.png"}
-                  alt="Product 1"
+                  alt={product?.title || "Product"}
                   width={402}
                   height={402}
                   className="rounded-xl"
                   priority
                 />
               </div>
-              <div
-                id="thumbProductWrapper"
-                className="flex w-full overflow-hidden gap-2 pt-5"
-              >
-                {product?.images.map((item, i) => {
-                  const img = item == "string" ? "/productexample.png" : item;
-                  return (
-                    <Link
-                      key={i}
-                      href="#"
-                      className="group hover:border-2 hover:border-neutral-950 hover:rounded-2xl"
-                    >
-                      <Image
-                        priority
-                        src={img}
-                        alt={`Product ${i + 1}`}
-                        width={72}
-                        height={72}
-                        className="w-[72px] rounded-2xl group-hover:scale-95 transition duration-500"
-                      />
-                    </Link>
-                  );
-                })}
+
+              <div className="flex w-full overflow-hidden gap-2 pt-5">
+                {product?.images.map((item, i) => (
+                  <Link
+                    key={i}
+                    href="#"
+                    className="group hover:border-2 hover:border-neutral-950 hover:rounded-2xl"
+                  >
+                    <Image
+                      priority
+                      src={item || "/productexample.png"}
+                      alt={`Product ${i + 1}`}
+                      width={72}
+                      height={72}
+                      className="w-[72px] rounded-2xl group-hover:scale-95 transition duration-500"
+                    />
+                  </Link>
+                ))}
               </div>
             </div>
 
-            {/* product description right */}
+            {/* Right description */}
             <div className="w-full md:w-2/3">
               <div className="w-full border-neutral-300 border-b">
                 <h4 className="text-base md:text-xl font-semibold">
                   {product?.title}
                 </h4>
                 <p className="text-xl md:text-[32px] font-bold py-2">
-                  {product?.price}
+                  Rp {product?.price?.toLocaleString("id-ID")}
                 </p>
                 <p className="text-sm md:text-lg font-semibold flex gap-2 mb-5">
                   <Star className="fill-[#FFAB0D] stroke-0 h-6 ml-0" />
-                  <Label htmlFor="star4.9">{product?.rating}</Label>
+                  <Label>{product?.rating}</Label>
                 </p>
               </div>
 
-              {/* Deskripsi*/}
+              {/* Deskripsi */}
               <Tabs>
                 <div className="text-sm md:text-base py-5 space-y-4">
                   <p className="leading-7.5">
-                    <p className="font-semibold mb-1 ">Deskripsi</p>
+                    <span className="font-semibold mb-1 block">Deskripsi</span>
                     {product?.description}
                   </p>
                 </div>
               </Tabs>
 
-              {/* Store info section */}
+              {/* Store info */}
               <div className="flex justify-between items-center border-t border-b border-neutral-300 py-5">
                 <div className="flex items-center gap-4">
                   <Avatar className="w-10 h-10">
@@ -161,7 +164,7 @@ export default function DetailProduct() {
                 </Button>
               </div>
 
-              {/* Quantity section */}
+              {/* Quantity */}
               <div className="flex items-center justify-between py-5">
                 <div className="flex items-center gap-6">
                   <p className="text-base font-semibold">Quantity</p>
@@ -170,14 +173,16 @@ export default function DetailProduct() {
                       variant="ghost"
                       size="sm"
                       className="text-lg font-bold px-2"
+                      onClick={handleDecrease}
                     >
                       −
                     </Button>
-                    <span className="mx-4 text-lg font-medium">2</span>
+                    <span className="mx-4 text-lg font-medium">{quantity}</span>
                     <Button
                       variant="ghost"
                       size="sm"
                       className="text-lg font-bold px-2"
+                      onClick={handleIncrease}
                     >
                       +
                     </Button>
@@ -185,22 +190,20 @@ export default function DetailProduct() {
                 </div>
               </div>
 
-              {/* Add to Cart button */}
+              {/* Add to Cart */}
               <Button
-                asChild
-                className="flex items-center justify-center gap-2 bg-black h-12 text-white w-78 py-4 rounded-md hover:bg-gray-800 transition duration-300"
+                onClick={handleAddToCart}
+                className="flex items-center justify-center gap-2 bg-black h-12 text-white w-full md:w-80 py-4 rounded-md hover:bg-gray-800 transition duration-300"
               >
-                <Link href="/cart">
-                  <span className="text-lg font-medium">+ Add to Cart</span>
-                </Link>
+                <span className="text-lg font-medium">+ Add to Cart</span>
               </Button>
             </div>
           </div>
         </div>
-        {/* Review start here */}
-        <div className="space-y-6 p-6 border-t">
-          <h2 className="text-3xl font-semibold ">Product Reviews</h2>
 
+        {/* Reviews */}
+        <div className="space-y-6 p-6 border-t">
+          <h2 className="text-3xl font-semibold">Product Reviews</h2>
           <div className="flex items-center gap-2">
             <Star className="text-yellow-500 fill-yellow-500" size={28.5} />
             <p className="font-semibold text-lg">{product?.rating}</p>
@@ -240,7 +243,8 @@ export default function DetailProduct() {
             </div>
           ))}
         </div>
-        {/* Related Product start here */}
+
+        {/* Related products */}
         <div
           id="relatedProdSection"
           className="py-8 border-t border-neutral-300"
@@ -248,33 +252,30 @@ export default function DetailProduct() {
           <h4 className="w-full text-xl md:text-[32px] font-bold mb-8">
             Related Products
           </h4>
-          <div
-            id="productListWrapper"
-            className="grid gap-5 grid-cols-2 md:grid-cols-4"
-          >
+          <div className="grid gap-5 grid-cols-2 md:grid-cols-4">
             {isLoadingProducts ? (
               <p>Loading...</p>
             ) : (
               relatedProducts?.map((item) => (
                 <div key={item.id} className="item-card">
-                  <div>
-                    <Image
-                      src={item.images[0] || "/imagecorrupt.png"}
-                      alt="Product 5"
-                      width={300}
-                      height={300}
-                      className="w-full"
-                      priority
-                    />
-                  </div>
+                  <Image
+                    src={item.images[0] || "/imagecorrupt.png"}
+                    alt={item.title}
+                    width={300}
+                    height={300}
+                    className="w-full"
+                    priority
+                  />
                   <div className="p-5">
                     <Link
-                      href="/detail-prod"
+                      href={`/detail-product/${item.id}`}
                       className="text-sm md:text-base hover:text-primary hover:scale-105 transition duration-500 block"
                     >
                       {item.title}
                     </Link>
-                    <p className="text-base font-bold py-1">{item.price}</p>
+                    <p className="text-base font-bold py-1">
+                      Rp {item.price.toLocaleString("id-ID")}
+                    </p>
                     <p className="text-base flex gap-2">
                       <Star className="fill-[#FFAB0D] stroke-0 h-4" />
                       {item.rating}
@@ -283,7 +284,6 @@ export default function DetailProduct() {
                 </div>
               ))
             )}
-            {/* item product */}
           </div>
         </div>
       </MainLayout>
