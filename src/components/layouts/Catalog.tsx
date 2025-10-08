@@ -15,7 +15,7 @@ interface CatalogProps {
   product: iProduct[] | undefined;
 }
 
-export default function Catalog({product} : CatalogProps) {
+export default function Catalog({ product }: CatalogProps) {
   const router = useRouter();
 
   const [visibleItems, setVisibleItems] = useState(16);
@@ -53,7 +53,7 @@ export default function Catalog({product} : CatalogProps) {
                 {/* product image */}
                 <Image
                   className="h-auto w-full"
-                  src={item.images[0] || "productexample.png"}
+                  src={item.images[0] || "/imagecorrupt.png"}
                   alt="productexample.png"
                   width={100}
                   height={500}

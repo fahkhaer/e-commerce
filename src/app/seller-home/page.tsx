@@ -212,6 +212,7 @@ export default function SellerHome() {
             <>
               <h1 className="text-2xl font-bold">Order List</h1>
               <OrderList />
+              
             </>
           )}
           {active === "reviews" && (

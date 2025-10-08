@@ -20,7 +20,7 @@ const reviews = Array.from({ length: 10 }, (_, i) => ({
   product: "Basketball Shoes Dunk Master",
   rating: 4.9,
   totalReview: 100,
-  image: "/shoes.png", // ganti sesuai asetmu
+  image: "/shoes.png",
 }));
 
 export default function Reviews() {

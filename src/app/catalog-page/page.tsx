@@ -24,10 +24,40 @@ import { useEffect, useState } from "react";
 import { iCategory } from "@/types/category.interface";
 import { getCategories } from "@/services/categories";
 
+interface PriceInputProps {
+  id: string;
+  placeholder: string;
+  value: number | "";
+  onChange: (value: number) => void;
+}
+
+const PriceInput = ({ id, placeholder, value, onChange }: PriceInputProps) => {
+  return (
+    <div className="relative">
+      <Badge
+        variant="secondary"
+        className="absolute left-2 top-1/2 -translate-y-1/2 h-9 font-semibold flex items-center justify-center"
+      >
+        Rp
+      </Badge>
+      <Input
+        id={id}
+        type="number"
+        placeholder={placeholder}
+        className="h-12 pl-12 my-1"
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+    </div>
+  );
+};
+
 export default function CatalogPage() {
   const [selectedValue, setSelectedValue] = useState("most-popular");
   const [dataSorted, setDataSorted] = useState<iProduct[]>();
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+  const [minPrice, setMinPrice] = useState<number | "">("");
+  const [maxPrice, setMaxPrice] = useState<number | "">("");
 
   const { data: products, isLoading: isLoadingProducts } = useQuery<iProduct[]>(
     {
@@ -88,7 +118,25 @@ export default function CatalogPage() {
     setDataSorted(sorted);
   };
 
-  useEffect(() => {}, [selectedValue, dataSorted]);
+  useEffect(() => {
+    const filterByPrice = () => {
+    if (minPrice === "" || maxPrice === "") return;
+
+    const filtered = products?.filter((p) => {
+      const price = p.price ?? 0;
+      return price >= minPrice && price <= maxPrice;
+    }) || [];
+
+    setDataSorted(filtered);
+  };
+
+  const timer = setTimeout(() => {
+    filterByPrice();
+  }, 1000);
+
+  return () => clearTimeout(timer);
+
+  }, [selectedValue, maxPrice, minPrice, products]);
 
   if (isLoadingProducts) return <p>Loading...</p>;
 
@@ -116,45 +164,20 @@ export default function CatalogPage() {
               <hr className="mb-5 text-neutral-300" />
               <div className="px-5">
                 <h4 className="text-base font-semibold mb-2">Price</h4>
-
                 <div className="grid gap-2">
-                  <div className="relative">
-                    {/* Badge di dalam input */}
-                    <Badge
-                      variant="secondary"
-                      className="absolute left-2 top-1/2 -translate-y-1/2 h-9 font-semibold flex items-center justify-center"
-                    >
-                      Rp
-                    </Badge>
+                  <PriceInput
+                    id="minimum-price"
+                    placeholder="Minimum Price"
+                    value={minPrice}
+                    onChange={(val) => setMinPrice(val)}
+                  />
 
-                    <Input
-                      className="h-12 pl-12 my-1"
-                      id="minimum-price"
-                      type="text"
-                      placeholder="Minimum Price"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="grid gap-2">
-                  <div className="relative">
-                    {/* Badge di dalam input */}
-                    <Badge
-                      variant="secondary"
-                      className="absolute left-2 top-1/2 -translate-y-1/2 h-9 font-semibold flex items-center justify-center"
-                    >
-                      Rp
-                    </Badge>
-
-                    <Input
-                      className="h-12 pl-12 my-1"
-                      id="minimum-price"
-                      type="text"
-                      placeholder="Maximum Price"
-                      required
-                    />
-                  </div>
+                  <PriceInput
+                    id="maximum-price"
+                    placeholder="Maximum Price"
+                    value={maxPrice}
+                    onChange={(val) => setMaxPrice(val)}
+                  />
                 </div>
               </div>
 
@@ -220,7 +243,8 @@ export default function CatalogPage() {
             <div className="w-full md:w-4/5">
               <div className="grid grid-cols-2 gap-5 md:flex md:gap-0 justify-between items-center">
                 <p className="text-base col-span-2">
-                  Showing {dataSorted?.length ?? products?.length} products ❗️perbaiki pb
+                  Showing {dataSorted?.length ?? products?.length} products
+                  ❗️perbaiki pb
                 </p>
 
                 {/* filter for mobile design */}

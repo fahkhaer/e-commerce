@@ -1,4 +1,3 @@
-//isinya ada di-ss
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -14,23 +13,59 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/ui/logo";
+import { useAuth } from "@/providers/AuthProvider";
+import { loginApi, registerApi } from "@/services/auth";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function RegisterPage() {
-  const [value, setValue] = useState("");
+  const { login } = useAuth();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // number input validation, 0-9
-    const onlyNumbers = e.target.value.replace(/\D/g, "");
-    setValue(onlyNumbers);
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Password dan Confirm Password tidak sama!");
+      return;
+    }
+
+    try {
+      const apiFormData = new FormData();
+      apiFormData.append("name", formData.name);
+      apiFormData.append("email", formData.email);
+      apiFormData.append("password", formData.password);
+      apiFormData.append(
+        "avatarUrl",
+        "https://res.cloudinary.com/dvz5kmwqx/image/upload/v1759557923/products/uwxwmwq3y0drl7u9vvpv.png"
+      );
+
+      await registerApi(apiFormData);
+      const loginResponse = await loginApi(formData.email, formData.password);
+
+      login(loginResponse.token, loginResponse.user);
+      window.location.href = "/";
+    } catch (error: any) {
+      alert("Gagal register atau login: " + error.message);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Card className="w-full max-w-md">
+    <div className="flex justify-center items-center h-screen px-6 bg-accent">
+      <Card className="w-full max-w-md gap-4">
         <CardHeader>
           <Logo className="h-10.5"></Logo>
-          <CardTitle className="text-2xl leading-9 font-bold pt-6">
+          <CardTitle className="text-2xl leading-9 font-bold pt-3">
             Register
           </CardTitle>
           <CardDescription className="leading-7">
@@ -38,42 +73,55 @@ export default function RegisterPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
-            <div className="grid gap-4">
-              <Input id="name" type="text" placeholder="Name" required></Input>
+          <form onSubmit={handleSubmit}>
+            <div className="grid gap-4 ">
               <Input
-                id="number-phone"
+                className=" h-11.5"
+                id="name"
                 type="text"
-                placeholder="Number Phone"
-                value={value}
+                placeholder="Name"
+                value={formData.name}
                 onChange={handleChange}
-                inputMode="numeric"
                 required
-              ></Input>
-              <Input id="email" type="email" placeholder="Email" required />
+              />
               <Input
+                className=" h-11.5"
+                id="email"
+                type="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              <Input
+                className=" h-11.5"
                 id="password"
                 type="password"
                 placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
                 required
               />
               <Input
-                id="confirm-password"
+                className=" h-11.5"
+                id="confirmPassword"
                 type="password"
                 placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 required
               />
             </div>
+            <Button type="submit" className="w-full mt-5 h-11.5">
+              Submit
+            </Button>
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full">
-            Submit
-          </Button>
           <div className="flex">
             <p className="text-sm pt-1">Already have an account?</p>
             <CardAction className="">
-              <Button className="px-2 pt-0" variant="link">
+              <Button className="px-2 pt-0 font-bold" variant="link">
                 <Link href="/login"> Login </Link>
               </Button>
             </CardAction>

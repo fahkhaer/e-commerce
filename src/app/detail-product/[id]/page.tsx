@@ -82,7 +82,7 @@ export default function DetailProduct() {
             <div className="w-full md:w-1/3 rounded-xl overflow-hidden">
               <div id="imageProdMain" className="rounded-xl overflow-hidden">
                 <Image
-                  src={"/productexample.png"}
+                  src={product?.images[0] || "/imagecorrupt.png"}
                   alt="Product 1"
                   width={400}
                   height={400}
@@ -94,22 +94,25 @@ export default function DetailProduct() {
                 id="thumbProductWrapper"
                 className="flex w-full overflow-hidden gap-2 pt-5"
               >
-                {product?.images.map((item, i) => (
-                  <Link
-                    key={i}
-                    href="#"
-                    className="group hover:border-2 hover:border-neutral-950 hover:rounded-2xl"
-                  >
-                    <Image
-                    priority
-                      src={item}
-                      alt={`Product ${i + 1}`}
-                      width={72}
-                      height={72}
-                      className="w-[72px] rounded-2xl group-hover:scale-95 transition duration-500"
-                    />
-                  </Link>
-                ))}
+                {product?.images.map((item, i) => {
+                  const img = item == "string" ? "/productexample.png" : item;
+                  return (
+                    <Link
+                      key={i}
+                      href="#"
+                      className="group hover:border-2 hover:border-neutral-950 hover:rounded-2xl"
+                    >
+                      <Image
+                        priority
+                        src={img}
+                        alt={`Product ${i + 1}`}
+                        width={72}
+                        height={72}
+                        className="w-[72px] rounded-2xl group-hover:scale-95 transition duration-500"
+                      />
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 
@@ -248,101 +251,42 @@ export default function DetailProduct() {
 
           <div className="flex items-center gap-2">
             <Star className="text-yellow-500 fill-yellow-500" size={20} />
-            <p className="font-semibold text-lg">4.9</p>
+            <p className="font-semibold text-lg">{product?.rating}</p>
             <p className="text-sm text-muted-foreground">/5.0</p>
           </div>
-
-          {/* Review 1 */}
-          <div>
-            <div className="flex items-start gap-4">
-              <Avatar>
-                <AvatarImage src="https://i.pravatar.cc/150?img=3" />
-                <AvatarFallback>J</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-medium">John Doe</p>
-                <p className="text-sm text-muted-foreground">
-                  25 August 2025, 13:38
-                </p>
-                <div className="flex mt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className="text-yellow-500 fill-yellow-500"
-                    />
-                  ))}
+          {product?.reviews.map((item, i) => (
+            <div key={i}>
+              <div className="flex items-start gap-4">
+                <Avatar>
+                  <AvatarImage
+                    src={item ?? "https://i.pravatar.cc/150?img=3"}
+                  />
+                  <AvatarFallback>J</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-medium">John Doe</p>
+                  <p className="text-sm text-muted-foreground">
+                    25 August 2025, 13:38
+                  </p>
+                  <div className="flex mt-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={16}
+                        className="text-yellow-500 fill-yellow-500"
+                      />
+                    ))}
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    Lorem ipsum dolor sit amet consectetur. Pulvinar porttitor
+                    aliquam viverra nunc sed facilisis. Integer tristique nullam
+                    morbi mauris ante.
+                  </p>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Lorem ipsum dolor sit amet consectetur. Pulvinar porttitor
-                  aliquam viverra nunc sed facilisis. Integer tristique nullam
-                  morbi mauris ante.
-                </p>
               </div>
+              <Separator className="my-6" />
             </div>
-            <Separator className="my-6" />
-          </div>
-
-          {/* Review 2 */}
-          <div>
-            <div className="flex items-start gap-4">
-              <Avatar>
-                <AvatarImage src="https://i.pravatar.cc/150?img=5" />
-                <AvatarFallback>J</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-medium">John Doe</p>
-                <p className="text-sm text-muted-foreground">
-                  25 August 2025, 13:38
-                </p>
-                <div className="flex mt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className="text-yellow-500 fill-yellow-500"
-                    />
-                  ))}
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Lorem ipsum dolor sit amet consectetur. Pulvinar porttitor
-                  aliquam viverra nunc sed facilisis. Integer tristique nullam
-                  morbi mauris ante.
-                </p>
-              </div>
-            </div>
-            <Separator className="my-6" />
-          </div>
-
-          {/* Review 3 */}
-          <div>
-            <div className="flex items-start gap-4">
-              <Avatar>
-                <AvatarImage src="https://i.pravatar.cc/150?img=7" />
-                <AvatarFallback>J</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-medium">John Doe</p>
-                <p className="text-sm text-muted-foreground">
-                  25 August 2025, 13:38
-                </p>
-                <div className="flex mt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className="text-yellow-500 fill-yellow-500"
-                    />
-                  ))}
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Lorem ipsum dolor sit amet consectetur. Pulvinar porttitor
-                  aliquam viverra nunc sed facilisis. Integer tristique nullam
-                  morbi mauris ante.
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
         {/* Related Product start here */}
         <div
@@ -360,10 +304,10 @@ export default function DetailProduct() {
               <p>Loading...</p>
             ) : (
               relatedProducts?.map((item) => (
-                <div key={item.id} className="item-card" >
+                <div key={item.id} className="item-card">
                   <div>
                     <Image
-                      src={item.images[0] || "/productexample.png"}
+                      src={item.images[0] || "/imagecorrupt.png"}
                       alt="Product 5"
                       width={300}
                       height={300}
