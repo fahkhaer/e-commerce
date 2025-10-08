@@ -1,7 +1,7 @@
 "use client";
 
 import MainLayout from "@/components/layouts/MainLayout";
-import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
+import Navbar from "@/components/layouts/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
@@ -46,17 +46,17 @@ export default function DetailProduct() {
   const relatedProducts = products?.filter(
     (item) => item.category.name === product?.category.name
   );
-  addCart(1,1)
+  addCart(1, 1);
 
   return (
     <>
-      <NavbarLoginUser />
+      <Navbar />
       <MainLayout>
-        <div id="prodDetailTop" className="pb-12">
+        <div id="prodDetailTop" className="pb-12 mt-1">
           {/* Breadcrumb section */}
           <div>
             <Breadcrumb>
-              <BreadcrumbList>
+              <BreadcrumbList className="font-bold text-black text-md">
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
                     <Link href="/">Home</Link>
@@ -77,15 +77,15 @@ export default function DetailProduct() {
           </div>
 
           {/* product detail section */}
-          <div className="flex flex-col md:flex-row gap-5 items-start">
+          <div className="flex flex-col md:flex-row gap-5 mt-5 items-start">
             {/* product image left */}
             <div className="w-full md:w-1/3 rounded-xl overflow-hidden">
               <div id="imageProdMain" className="rounded-xl overflow-hidden">
                 <Image
                   src={product?.images[0] || "/imagecorrupt.png"}
                   alt="Product 1"
-                  width={400}
-                  height={400}
+                  width={402}
+                  height={402}
                   className="rounded-xl"
                   priority
                 />
@@ -126,120 +126,72 @@ export default function DetailProduct() {
                   {product?.price}
                 </p>
                 <p className="text-sm md:text-lg font-semibold flex gap-2 mb-5">
-                  <Star className="fill-[#FFAB0D] stroke-0 h-4 ml-1" />
+                  <Star className="fill-[#FFAB0D] stroke-0 h-6 ml-0" />
                   <Label htmlFor="star4.9">{product?.rating}</Label>
                 </p>
               </div>
 
-              {/* Tabs untuk Deskripsi & Spesifikasi */}
-              <Tabs
-                defaultValue="desc"
-                className="pt-5 border-b border-neutral-300"
-              >
-                <TabsList className="flex w-full md:w-auto">
-                  <TabsTrigger value="desc" className="w-1/2">
-                    Deskripsi
-                  </TabsTrigger>
-                  <TabsTrigger value="spec" className="w-1/2">
-                    Spesifikasi
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent
-                  value="desc"
-                  className="py-5 text-sm md:text-base border-b border-neutral-300"
-                >
-                  <div className="text-sm md:text-base py-5 space-y-4">
-                    <p>
-                      <span className="font-semibold">
-                        Sneakers Court Minimalis – Ivory Beige
-                      </span>
-                      <br />
-                      {product?.description}
-                    </p>
-                    <br />
-                    <ul className="list-disc pl-6 space-y-1">
-                      <li>
-                        <span className="font-semibold">Desain:</span> Low-top
-                        dengan siluet klasik yang timeless
-                      </li>
-                      <li>
-                        <span className="font-semibold">Material:</span> Kulit
-                        sintetis premium + suede sintetis
-                      </li>
-                      <li>
-                        <span className="font-semibold">Sol:</span> Outsole
-                        karet anti-slip dengan warna natural gum untuk daya
-                        cengkeram yang baik
-                      </li>
-                      <li>
-                        <span className="font-semibold">Kenyamanan:</span>{" "}
-                        Insole empuk dengan bantalan ekstra untuk pemakaian
-                        sehari-hari
-                      </li>
-                      <li>
-                        <span className="font-semibold">Warna:</span> Ivory
-                        Beige
-                      </li>
-                      <li>
-                        <span className="font-semibold">Gaya:</span> Cocok untuk
-                        casual look, street style, maupun semi-formal
-                      </li>
-                    </ul>
-                  </div>
-                </TabsContent>
-
-                <TabsContent
-                  value="spec"
-                  className="pb-5 text-sm md:text-base border-b border-neutral-300"
-                >
-                  <ul className="list-disc pl-6">
-                    <li>Desain: Low-top dengan siluet klasik yang timeless</li>
-                    <li>Material: Kulit sintetis premium + suede sintetis</li>
-                    <li>
-                      Sol: Outsole karet anti-slip dengan warna natural gum
-                    </li>
-                    <li>Kenyamanan: Insole empuk dengan bantalan ekstra</li>
-                    <li>Warna: Ivory Beige</li>
-                    <li>
-                      Gaya: Cocok untuk casual look, street style, maupun
-                      semi-formal
-                    </li>
-                  </ul>
-                </TabsContent>
+              {/* Deskripsi*/}
+              <Tabs>
+                <div className="text-sm md:text-base py-5 space-y-4">
+                  <p className="leading-7.5">
+                    <p className="font-semibold mb-1 ">Deskripsi</p>
+                    {product?.description}
+                  </p>
+                </div>
               </Tabs>
 
+              {/* Store info section */}
+              <div className="flex justify-between items-center border-t border-b border-neutral-300 py-5">
+                <div className="flex items-center gap-4">
+                  <Avatar className="w-10 h-10">
+                    <AvatarImage src="/mustache.png" alt="Store Avatar" />
+                    <AvatarFallback>TB</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="font-bold">Toko Barokah Jaya</h3>
+                    <p className="text-neutral-700">Jakarta Selatan</p>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  className="rounded-lg text-sm font-semibold px-5 py-2"
+                >
+                  See Store
+                </Button>
+              </div>
+
               {/* Quantity section */}
-              <div className="flex items-center gap-10 py-5">
-                <p className="text-base font-semibold">Quantity</p>
-                <div className="flex items-center border border-neutral-300 rounded-xl px-4 py-2 w-fit">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-lg font-bold px-2"
-                    //click
-                  >
-                    -
-                  </Button>
-                  <span className="mx-4 text-lg font-medium">2</span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-lg font-bold px-2"
-                  >
-                    +
-                  </Button>
+              <div className="flex items-center justify-between py-5">
+                <div className="flex items-center gap-6">
+                  <p className="text-base font-semibold">Quantity</p>
+                  <div className="flex items-center border border-neutral-300 rounded-xl px-4 py-2 w-fit">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-lg font-bold px-2"
+                    >
+                      −
+                    </Button>
+                    <span className="mx-4 text-lg font-medium">2</span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-lg font-bold px-2"
+                    >
+                      +
+                    </Button>
+                  </div>
                 </div>
               </div>
 
-              {/* button add to cart */}
+              {/* Add to Cart button */}
               <Button
                 asChild
-                className="flex items-center justify-center gap-2 bg-black text-white px-20 py-3 rounded-md hover:bg-primary hover:text-black hover:scale-105 duration-500 transition md:inline-block w-full md:w-auto"
+                className="flex items-center justify-center gap-2 bg-black h-12 text-white w-78 py-4 rounded-md hover:bg-gray-800 transition duration-300"
               >
                 <Link href="/cart">
-                  <span className="text-lg">+</span>
-                  <span>Add to Cart</span>
+                  <span className="text-lg font-medium">+ Add to Cart</span>
                 </Link>
               </Button>
             </div>
@@ -247,10 +199,10 @@ export default function DetailProduct() {
         </div>
         {/* Review start here */}
         <div className="space-y-6 p-6 border-t">
-          <h2 className="text-xl font-semibold">Product Reviews</h2>
+          <h2 className="text-3xl font-semibold ">Product Reviews</h2>
 
           <div className="flex items-center gap-2">
-            <Star className="text-yellow-500 fill-yellow-500" size={20} />
+            <Star className="text-yellow-500 fill-yellow-500" size={28.5} />
             <p className="font-semibold text-lg">{product?.rating}</p>
             <p className="text-sm text-muted-foreground">/5.0</p>
           </div>
