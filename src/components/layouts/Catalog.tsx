@@ -7,9 +7,9 @@ import { BadgeCheck, Star } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface CatalogProps {
   product: iProduct[] | undefined;
