@@ -14,12 +14,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/ui/logo";
 import { useAuth } from "@/providers/AuthProvider";
-import { loginApi, registerApi,  } from "@/services/auth";
+import { loginApi, registerApi } from "@/services/auth";
 import Link from "next/link";
-import {  useState } from "react";
+import { useState } from "react";
 
 export default function RegisterPage() {
-    const { login } = useAuth();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,7 +29,7 @@ export default function RegisterPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
+    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,13 +45,13 @@ export default function RegisterPage() {
       apiFormData.append("name", formData.name);
       apiFormData.append("email", formData.email);
       apiFormData.append("password", formData.password);
-      apiFormData.append("avatarUrl", "https://res.cloudinary.com/dvz5kmwqx/image/upload/v1759557923/products/uwxwmwq3y0drl7u9vvpv.png");
+      apiFormData.append(
+        "avatarUrl",
+        "https://res.cloudinary.com/dvz5kmwqx/image/upload/v1759557923/products/uwxwmwq3y0drl7u9vvpv.png"
+      );
 
       await registerApi(apiFormData);
-      const loginResponse = await loginApi(
-        formData.email,
-        formData.password,
-      );
+      const loginResponse = await loginApi(formData.email, formData.password);
 
       login(loginResponse.token, loginResponse.user);
       window.location.href = "/";
@@ -61,11 +61,11 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Card className="w-full max-w-md">
+    <div className="flex justify-center items-center h-screen px-6 bg-accent">
+      <Card className="w-full max-w-md gap-4">
         <CardHeader>
           <Logo className="h-10.5"></Logo>
-          <CardTitle className="text-2xl leading-9 font-bold pt-6">
+          <CardTitle className="text-2xl leading-9 font-bold pt-3">
             Register
           </CardTitle>
           <CardDescription className="leading-7">
@@ -74,8 +74,9 @@ export default function RegisterPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
-            <div className="grid gap-4">
-                <Input
+            <div className="grid gap-4 ">
+              <Input
+                className=" h-11.5"
                 id="name"
                 type="text"
                 placeholder="Name"
@@ -84,6 +85,7 @@ export default function RegisterPage() {
                 required
               />
               <Input
+                className=" h-11.5"
                 id="email"
                 type="email"
                 placeholder="Email"
@@ -92,6 +94,7 @@ export default function RegisterPage() {
                 required
               />
               <Input
+                className=" h-11.5"
                 id="password"
                 type="password"
                 placeholder="Password"
@@ -100,6 +103,7 @@ export default function RegisterPage() {
                 required
               />
               <Input
+                className=" h-11.5"
                 id="confirmPassword"
                 type="password"
                 placeholder="Confirm Password"
@@ -108,16 +112,16 @@ export default function RegisterPage() {
                 required
               />
             </div>
-          <Button type="submit" className="w-full">
-            Submit
-          </Button>
+            <Button type="submit" className="w-full mt-5 h-11.5">
+              Submit
+            </Button>
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
           <div className="flex">
             <p className="text-sm pt-1">Already have an account?</p>
             <CardAction className="">
-              <Button className="px-2 pt-0" variant="link">
+              <Button className="px-2 pt-0 font-bold" variant="link">
                 <Link href="/login"> Login </Link>
               </Button>
             </CardAction>

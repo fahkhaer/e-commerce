@@ -39,14 +39,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Card className="w-full max-w-md">
+    <div className="flex justify-center items-center h-screen px-6 bg-accent">
+      <Card className="w-full max-w-md gap-0 pb-3">
         <CardHeader>
           <Logo className="h-10.5"></Logo>
-          <CardTitle className="text-2xl leading-9 font-bold pt-6">
+          <CardTitle className="text-2xl leading-9 font-bold pt-4">
             Login
           </CardTitle>
-          <CardDescription className="leading-7">
+          <CardDescription className="leading-7 pb-5">
             Access your account and start shopping in seconds{" "}
           </CardDescription>
         </CardHeader>
@@ -55,6 +55,7 @@ export default function LoginPage() {
             <div className="grid gap-4">
               <Input
                 {...register("email")}
+                className="h-14"
                 type="email"
                 placeholder="Email"
                 required
@@ -65,6 +66,7 @@ export default function LoginPage() {
 
               <Input
                 {...register("password")}
+                className="h-14 mb-1.5"
                 type="password"
                 placeholder="Password"
                 required
@@ -75,16 +77,20 @@ export default function LoginPage() {
                 </p>
               )}
             </div>
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="w-full h-12"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Logging in..." : "Login"}
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex-col gap-2">
+        <CardFooter className="flex-col mt-3">
           <div className="flex">
             <p className="text-sm pt-1">Don&apos;t have an account?</p>
-            <CardAction className="">
-              <Button className="px-2 pt-0" variant="link">
+            <CardAction>
+              <Button className="px-2 pt-0 font-bold" variant="link">
                 <Link href="/register"> Register</Link>
               </Button>
             </CardAction>
