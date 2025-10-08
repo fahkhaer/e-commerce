@@ -1,7 +1,6 @@
 import { Logo } from "../ui/logo";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import Image from "next/image";
 
 // components/layout/MainLayout.tsx
 export default function MainLayout({
@@ -14,7 +13,7 @@ export default function MainLayout({
       <div className="relative flex flex-col pb-20 px-5 md:px-30 md:py-10">
         {children}
       </div>
-      
+
       <footer className="border-t border-neutral-300 px-4 md:px-37.5 py-10 md:py-20">
         <div className="w-full mx-auto flex flex-col gap-5 md:flex-row md:gap-10">
           {/* <!-- === LEFT SECTION SHIRT === --> */}

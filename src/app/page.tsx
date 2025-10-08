@@ -6,15 +6,7 @@ import HeroImage from "@/components/ui/hero";
 export default function Home() {
   return (
     <>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-      <NavbarGuest></NavbarGuest>
-=======
       <Navbar />
->>>>>>> Stashed changes
-=======
-      <Navbar/>
->>>>>>> fetch-api
       <MainLayout>
         <HeroImage />
         <div className="w-full mt-10">
