@@ -16,11 +16,12 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Reviews from "@/components/layouts/ReviewSeller";
 import StoreSettings from "@/components/layouts/StoreSettings";
 import { ProductsList } from "@/components/layouts/ProductsList";
 import OrderList from "@/components/layouts/OrderListSeller";
+import { useSearchParams } from "next/navigation";
 
 export default function SellerHome() {
   const searchParams = useSearchParams();
@@ -212,7 +213,6 @@ export default function SellerHome() {
             <>
               <h1 className="text-2xl font-bold">Order List</h1>
               <OrderList />
-              
             </>
           )}
           {active === "reviews" && (
