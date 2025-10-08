@@ -1,40 +1,47 @@
 'use client'
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface User {
-  token: string;
-  name?: string;
+  id: number;
+  name: string;
+  email: string;
+  avatarUrl: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (user: User) => void;
+  token: string | null;
+  login: (token: string, user: User) => void;
   logout: () => void;
 }
+
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("user");
-    if (saved) setUser(JSON.parse(saved));
-  }, []);
-
-  const login = (newUser: User) => {
-    localStorage.setItem("user", JSON.stringify(newUser));
-    setUser(newUser);
+  const login = (token: string, user: User) => {
+    setToken(token);
+    setUser(user);
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
+    setToken(null);
     setUser(null);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    return (
+    <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
+};
+

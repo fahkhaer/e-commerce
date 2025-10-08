@@ -1,14 +1,12 @@
 import Catalog from "@/components/layouts/Catalog";
 import MainLayout from "@/components/layouts/MainLayout";
-import NavbarGuest from "@/components/layouts/NavbarGuest";
+import Navbar from "@/components/layouts/Navbar";
 import HeroImage from "@/components/ui/hero";
-
-import DetailProduct from "./detail-product/page";
 
 export default function Home() {
   return (
     <>
-      <NavbarGuest></NavbarGuest>
+      <Navbar/>
       <MainLayout>
         <HeroImage />
 
@@ -18,8 +16,7 @@ export default function Home() {
           </h2>
         </div>
         {/* grid daftar produk */}
-        <Catalog/>
-        <DetailProduct/>
+        <Catalog product={undefined}/>
       </MainLayout>
     </>
   );

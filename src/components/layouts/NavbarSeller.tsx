@@ -11,7 +11,11 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 export default function NavbarSeller() {
   return (
     <nav className="shadow-[0_0_20px_0_#CBCACA40] grid grid-cols-[auto_minmax(8px,1fr)_auto_auto]  h-21 md:px-30 items-center gap-3">
-      <Logo />
+      <Link href="/">
+        <Link href="/">
+          <Logo />
+        </Link>
+      </Link>
       <div className="flex gap-3">
         <Badge
           className="radius-xl text-sm h-11 hover:bg-accent ml-20"
@@ -19,11 +23,11 @@ export default function NavbarSeller() {
         >
           {" "}
           <Link
-            href="/category"
+            href="/catalog-page"
             className="flex items-center gap-1.5 px-2 font-normal text-sm"
           >
             <LayoutGrid />
-            Category
+            Catalog
           </Link>
         </Badge>
         <Command className=" flex items-start gap-1.5 h-11 px-4 rounded-lg border radius-xl w-full">
@@ -36,7 +40,9 @@ export default function NavbarSeller() {
       </div>
 
       <div className="flex gap-3 pl-10 items-baseline">
-        <ShoppingCart className="shrink-0" />
+        <Link href="/cart-page">
+          <ShoppingCart className="shrink-0" />
+        </Link>{" "}
         <Button
           variant="outline"
           className="w-fit rounded-full h-11 text-sm font-bold ml-4 bg-white border"
@@ -46,12 +52,11 @@ export default function NavbarSeller() {
             Toko Bar...
           </Link>
         </Button>
-
         <Button
           variant="outline"
           className="w-fit rounded-full h-11 text-sm font-bold my-auto py-2 px-3 gap-2 bg-white border"
         >
-          <Link href="#" className="flex items-center gap-2 ">
+          <Link href="/seller-home" className="flex items-center gap-2 ">
             <Avatar>
               <AvatarImage
                 className="rounded-full h-8"

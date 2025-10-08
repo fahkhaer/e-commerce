@@ -19,15 +19,36 @@ export interface iProduct {
     slug: string;
     logo: string | null;
   };
+  description: string
+  reviews: string[]
 }
 
-export interface iProductResponse {
-  data: {
-    products: iProduct[]; // Array of products
-    meta: {
-      totalProducts: number; // Total jumlah produk yang tersedia
-      page: number;          // Halaman saat ini
-      perPage: number;       // Jumlah produk per halaman
-    };
-  };
+export interface CartResponse {
+  cartId: number;
+  items: CartItem[];
+  groups: CartGroup[];
+  grandTotal: number;
 }
+
+export interface CartItem {
+  id: number;
+  productId: number;
+  qty: number;
+  priceSnapshot: number;
+  subtotal: number;
+  product: iProduct;
+}
+
+
+export interface Shop {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface CartGroup {
+  shop: Shop;
+  items: CartItem[];
+  subtotal: number;
+}
+

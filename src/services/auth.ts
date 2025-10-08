@@ -1,45 +1,44 @@
-//hasil copy dari coach Fauzi"
+import { AuthResponse, User } from "@/types/auth";
 
-// import { apiClient } from "@/lib/api-client";
-// import {
-//   LoginRequest,
-//   LoginResponse,
-//   RegisterRequest,
-//   MeResponse,
-//   UpdateProfileRequest,
-// } from "@/types/api";
+export const loginApi = async (
+  email: string,
+  password: string
+): Promise<AuthResponse> => {
+  
+  const res = await fetch(
+    "https://e-commerce-api-production-26ab.up.railway.app/api/auth/login",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    }
+  );
+  const auth = await res.json();
 
-// export const authApi = {
-//   // POST /api/auth/register
-//   register: async (data: RegisterRequest): Promise<LoginResponse> => {
-//     const formData = new FormData();
-//     formData.append("name", data.name);
-//     formData.append("email", data.email);
-//     formData.append("password", data.password);
+  localStorage.setItem("token", auth?.data.token);
 
-//     if (data.avatar) {
-//       formData.append("avatar", data.avatar);
-//     }
+  return {
+    token: auth?.data.token,
+    user: auth?.data.user,
+  };
+};
 
-//     if (data.avatarUrl) {
-//       formData.append("avatarUrl", data.avatarUrl);
-//     }
+export const registerApi = async (formData: FormData): Promise<User> => {
+  const res = await fetch(
+    "https://e-commerce-api-production-26ab.up.railway.app/api/auth/register",
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
 
-//     return apiClient.postFormData<LoginResponse>("/api/auth/register", formData);
-//   },
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || "Register failed");
+  }
 
-//   // POST /api/auth/login
-//   login: async (data: LoginRequest): Promise<LoginResponse> => {
-//     return apiClient.post<LoginResponse>("/api/auth/login", data);
-//   },
-
-//   // GET /api/me
-//   getMe: async (): Promise<MeResponse> => {
-//     return apiClient.get<MeResponse>("/api/me");
-//   },
-
-//   // PATCH /api/me
-//   updateProfile: async (data: UpdateProfileRequest): Promise<MeResponse> => {
-//     return apiClient.patch<MeResponse>("/api/me", data);
-//   },
-// };
+  return res.json();
+};
