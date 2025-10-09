@@ -6,7 +6,8 @@ const nextConfig: NextConfig = {
       "res.cloudinary.com",
       "images.macrumors.com",
       "artofcards.in",
-      "images.unsplash.com"
+      "images.unsplash.com",
+      "www.mobiledokan.com",
     ],
   },
   reactStrictMode: true,
