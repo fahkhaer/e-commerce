@@ -33,6 +33,7 @@ export default function LoginPage() {
       const result = await loginApi(data.email, data.password);
       login(result.token, result.user);
       window.location.href = "/";
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
     } catch (error: any) {
       alert(error.message || "Something went wrong");
     }
@@ -93,7 +94,6 @@ export default function LoginPage() {
               <Button className="px-2 pt-0 font-bold" variant="link">
                 <Link href="/register"> Register</Link>
               </Button>
-              
             </CardAction>
           </div>
         </CardFooter>
