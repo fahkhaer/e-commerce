@@ -37,8 +37,10 @@ export interface CartItem {
   priceSnapshot: number;
   subtotal: number;
   product: iProduct;
+  price: number;
+  isActive: boolean,
+  stock : number
 }
-
 
 export interface Shop {
   id: number;
