@@ -1,7 +1,6 @@
 "use client";
 
 import MainLayout from "@/components/layouts/MainLayout";
-import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { StoreIcon, } from "lucide-react";
@@ -19,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import Navbar from "@/components/layouts/Navbar";
 
 export default function CheckoutPage() {
   const [value, setValue] = useState("");
@@ -30,7 +30,7 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <NavbarLoginUser />
+      <Navbar />
       <MainLayout>
         <h1 className="font-bold text-2xl md:text-[32px] leading-9 md:leading-[42px] pb-8 px-4 md:px-0">
           Checkout

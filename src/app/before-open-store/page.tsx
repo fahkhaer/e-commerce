@@ -1,12 +1,12 @@
 import Catalog from "@/components/layouts/Catalog";
 import MainLayout from "@/components/layouts/MainLayout";
-import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
+import Navbar from "@/components/layouts/Navbar";
 import HeroImage from "@/components/ui/hero";
 
 export default function BeforeOpenStore() {
   return (
     <>
-      <NavbarLoginUser />
+      <Navbar />
       <MainLayout>
         <HeroImage></HeroImage>
         <div className="w-full mt-10">
