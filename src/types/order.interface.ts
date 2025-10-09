@@ -13,7 +13,7 @@ export interface iOrder {
   }[];
   totalAmount: number;
   createdAt: string;
-  items:OrderItem[];
+  items: OrderItem[];
 }
 
 export interface OrderItem {
@@ -22,7 +22,7 @@ export interface OrderItem {
   shopId: number;
   qty: number;
   priceSnapshot: number;
-  status: 'NEW' | 'PROCESSING' | 'DELIVERED' | 'CANCELLED'; // Tambahkan status lain jika ada
+  status: "NEW" | "PROCESSING" | "DELIVERED" | "CANCELLED"; // Tambahkan status lain jika ada
   product: Product;
   shop: Shop;
 }
