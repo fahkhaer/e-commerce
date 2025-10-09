@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 interface ProductItemProps {
   shop: Shop;
   items: CartItem[];
+  onCheckedChange: (id: number) => void;
 }
 
 const useDeleteCartItem = () => {
@@ -42,8 +43,11 @@ const useUpdateCartItem = () => {
   });
 };
 
-const ProductItem = ({ shop, items }: ProductItemProps) => {
+const ProductItem = ({ shop, items, onCheckedChange }: ProductItemProps) => {
   const [quantities, setQuantities] = useState<{ [id: number]: number }>({});
+  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
+    {}
+  );
 
   const { mutate: deleteItem, isPending } = useDeleteCartItem();
   const { mutate: updateItemQty } = useUpdateCartItem();
@@ -70,22 +74,29 @@ const ProductItem = ({ shop, items }: ProductItemProps) => {
     });
   };
 
-const handleDecrease = (itemId: number) => {
-  setQuantities((prev) => {
-    const currentQty = prev[itemId];
+  const handleDecrease = (itemId: number) => {
+    setQuantities((prev) => {
+      const currentQty = prev[itemId];
 
-    if (currentQty <= 1) {
-      deleteItem(itemId);
-      return prev; 
-    }
+      if (currentQty <= 1) {
+        deleteItem(itemId);
+        return prev;
+      }
 
-    const newQty = currentQty - 1;
-    updateItemQty({ itemId, qty: newQty });
+      const newQty = currentQty - 1;
+      updateItemQty({ itemId, qty: newQty });
 
-    return { ...prev, [itemId]: newQty };
-  });
-};
+      return { ...prev, [itemId]: newQty };
+    });
+  };
 
+  const handleChange = (id: number) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+    onCheckedChange(id);
+  };
   return (
     <Card className="p-0 shadow-none">
       <CardContent className="p-0">
@@ -97,12 +108,14 @@ const handleDecrease = (itemId: number) => {
         </div>
         {items.map((item) => (
           <div key={item.id}>
-            <Label className="hover:bg-accent/50 flex flex-col md:flex-row md:justify-between items-start gap-3 my-1 md:my-4 px-3 pb-2.5 md:py-3 rounded-lg has-[[aria-checked=true]]:border has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950">
+            <Label className=" flex flex-col md:flex-row md:justify-between items-start gap-3 my-1 md:my-4 px-3 pb-2.5 md:py-3 rounded-lg has-[[aria-checked=true]]:border has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950">
               <div className="flex gap-3 md:pt-0 pt-2.5">
                 <div className="flex flex-col justify-start">
-                  <Checkbox />
+                  <Checkbox
+                    checked={!!checkedItems[item.id]}
+                    onCheckedChange={() => handleChange(item.id)}
+                  />
                 </div>
-
                 {/* Image dan text */}
                 <div className="flex items-center gap-3">
                   <Image
@@ -146,9 +159,7 @@ const handleDecrease = (itemId: number) => {
                       variant="ghost"
                       size="sm"
                       className="text-lg font-bold px-0 md:px-2"
-                      onClick={() =>
-                        handleDecrease(item.id)
-                      }
+                      onClick={() => handleDecrease(item.id)}
                     >
                       −
                     </Button>
@@ -179,11 +190,33 @@ const handleDecrease = (itemId: number) => {
 };
 
 export default function CartPage() {
+  const [checkedItemIds, setCheckedItemIds] = useState<number[]>([]);
   const { data, isLoading, error } = useQuery<CartResponse, Error>({
     queryKey: ["cart"],
     queryFn: getCart,
     staleTime: 1000 * 60 * 5,
   });
+
+  const handleCheckedChange = (id: number) => {
+    setCheckedItemIds((prev) => {
+      if (prev.includes(id)) return prev;
+      return [...prev, id];
+    });
+  };
+
+  const result = data?.groups
+    .map((group) => {
+      const filteredItems = group.items.filter((item) =>
+        checkedItemIds.includes(item.id)
+      );
+
+      if (filteredItems.length > 0)
+        return {
+          shop: group.shop,
+          items: filteredItems,
+        };
+    })
+    .filter(Boolean);
 
   if (isLoading) return <div>Loading cart...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -203,7 +236,11 @@ export default function CartPage() {
             </div>
             {data?.groups.map((item, i) => (
               <div key={i}>
-                <ProductItem shop={item.shop} items={item.items} />
+                <ProductItem
+                  shop={item.shop}
+                  items={item.items}
+                  onCheckedChange={handleCheckedChange}
+                />
                 <br />
               </div>
             ))}
@@ -222,7 +259,15 @@ export default function CartPage() {
                   {data?.grandTotal}
                 </h2>
               </div>
-              <Link href="/checkout-page">
+              <Link
+                href={{
+                  pathname: "/checkout-page",
+                  query: {
+                    itemId: JSON.stringify(checkedItemIds),
+                    items: JSON.stringify(result),
+                  },
+                }}
+              >
                 <Button className="w-full text-base h-12">Checkout</Button>
               </Link>
             </section>
