@@ -16,15 +16,28 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Reviews from "@/components/layouts/ReviewSeller";
 import StoreSettings from "@/components/layouts/StoreSettings";
 import { ProductsList } from "@/components/layouts/ProductsList";
 import OrderList from "@/components/layouts/OrderListSeller";
+import { useSearchParams } from "next/navigation";
 
 export default function SellerHome() {
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab");
+
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState("dashboard"); // menu aktif
+
+  useEffect(() => {
+    if (tab === "reviews" || tab === "orders") {
+      setActive(tab);
+    } else {
+      // fallback ke default, misalnya "orders"
+      setActive("orders");
+    }
+  }, [tab]);
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -200,7 +213,6 @@ export default function SellerHome() {
             <>
               <h1 className="text-2xl font-bold">Order List</h1>
               <OrderList />
-              
             </>
           )}
           {active === "reviews" && (

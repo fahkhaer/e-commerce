@@ -1,9 +1,9 @@
 import { FC, SVGProps } from "react";
 
-export const Logo: FC<SVGProps<SVGSVGElement>> = () => {
+export const Logo: FC<SVGProps<SVGSVGElement>> = ({ className }: { className?: string }) => {
   return (
     <svg
-    className="shrink-0"
+      className={`shrink-0 ${className}`}
       width="106"
       height="42"
       viewBox="0 0 106 42"
