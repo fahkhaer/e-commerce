@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import OrderListBuyer from "@/components/layouts/OrderListBuyer";
 import ReviewBuyerList from "@/components/layouts/ReviewBuyerList";
@@ -19,25 +20,37 @@ import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function ReviewBuyer() {
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab");
+
   const [activeMenu, setActiveMenu] = useState<"orders" | "reviews">("orders");
+
+  // agar bisa langsung buka tab review via URL ?tab=reviews
+  useEffect(() => {
+    if (tab === "reviews") {
+      setActiveMenu("reviews");
+    }
+  }, [tab]);
 
   return (
     <div className="flex pb-20 sm:px-4 md:px-30 md:py-10 bg-gray-50">
       {/* Sidebar */}
-      <Card className="w-[227px] h-[230px] p-6 border-r bg-white flex flex-col gap-6 mt-6">
+      <Card className="w-[227px] min-h-[230px] p-6 border-r bg-white flex flex-col gap-6 mt-6">
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src="https://i.pravatar.cc/40" alt="John Doe" />
             <AvatarFallback>JD</AvatarFallback>
-          </Avatar>{" "}
+          </Avatar>
           <div>
             <p className="font-semibold">John Doe</p>
           </div>
         </div>
+
         <nav className="flex flex-col gap-2">
+          {/* Order List */}
           <Button
             variant={activeMenu === "orders" ? "secondary" : "ghost"}
-            className="justify-start"
+            className="justify-start transition-all duration-300 ease-in-out"
             onClick={() => setActiveMenu("orders")}
           >
             <svg
@@ -57,18 +70,24 @@ export default function ReviewBuyer() {
             </svg>
             Order List
           </Button>
+
+          {/* Review */}
           <Button
             variant={activeMenu === "reviews" ? "secondary" : "ghost"}
-            className="justify-start"
+            className="justify-start transition-all duration-300 ease-in-out"
             onClick={() => setActiveMenu("reviews")}
           >
-            {" "}
             <Star />
             Review
           </Button>
+
+          {/* Logout */}
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="ghost" className="justify-start">
+              <Button
+                variant="ghost"
+                className="justify-start transition-all duration-300 ease-in-out text-destructive"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -98,12 +117,10 @@ export default function ReviewBuyer() {
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
                 <DialogTitle>Logout</DialogTitle>
-
                 <DialogDescription>
                   You will need to sign in again to access your account
                 </DialogDescription>
               </DialogHeader>
-
               <DialogFooter className="flex justify-end gap-2">
                 <DialogClose asChild>
                   <Button variant="outline">Cancel</Button>
@@ -116,9 +133,8 @@ export default function ReviewBuyer() {
       </Card>
 
       {/* Content */}
-      <main className="flex-1 pl-6 ">
+      <main className="flex-1 pl-6">
         {activeMenu === "orders" && <OrderListBuyer />}
-
         {activeMenu === "reviews" && (
           <div className="flex flex-col gap-4">
             <ReviewBuyerList />

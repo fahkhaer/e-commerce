@@ -40,7 +40,7 @@ export default function Catalog({ product }: CatalogProps) {
   return (
     <>
       {/* grid daftar produk */}
-      <div className="w-full bg-white py-10">
+      <div className="w-full bg-white md:py-5">
         <div className="mx-auto max-w-[1200px]">
           <div className="grid gap-5 grid-cols-2 md:grid-cols-4">
             {/* put card product here */}
@@ -52,7 +52,7 @@ export default function Catalog({ product }: CatalogProps) {
               >
                 {/* product image */}
                 <Image
-                  className="h-auto w-full"
+                  className="h-auto rounded-lg w-full"
                   src={item.images[0] || "/imagecorrupt.png"}
                   alt="productexample.png"
                   width={100}

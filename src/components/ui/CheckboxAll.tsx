@@ -45,7 +45,7 @@ export default function CheckboxAll({ items, onChange }: CheckboxAllProps) {
           checked={allChecked}
           onCheckedChange={(val) => handleAllChange(val === true)}
         />
-        <Label htmlFor="all">All</Label>
+        <Label className="text-sm md:text-md" htmlFor="all">All</Label>
       </div>
 
       {/* Checkbox Items */}

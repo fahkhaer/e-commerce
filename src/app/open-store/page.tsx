@@ -2,13 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Logo } from "@/components/ui/logo";
-import MainLayout from "@/components/layouts/MainLayout";
 
 export default function OpenStore() {
   return (
-    <MainLayout>
-      <section className="flex justify-center items-center min-h-screen">
-        <div className="bg-white shadow-lg rounded-2xl p-6 w-full h-auto max-w-md">
+    <section className="bg-accent flex justify-center items-center p-5  ">
+      <section className="w-full max-w-md">
+        <div className="bg-white shadow-lg rounded-2xl p-6">
           {/* Header */}
           <div className="flex flex-col items-start gap-2 mb-6">
             <Logo />
@@ -25,7 +24,7 @@ export default function OpenStore() {
             <div>
               <h3 className="text-sm font-bold mb-2">STORE PROFILE</h3>
               <Input
-                className="h-14 my-1.5"
+                className="h-14 mb-1.5"
                 id="store-name"
                 type="text"
                 placeholder="Store Name"
@@ -46,7 +45,7 @@ export default function OpenStore() {
             <div>
               <h3 className="text-sm font-bold mb-2">STORE ADDRESS</h3>
               <Input
-                className="h-14 my-1.5"
+                className="h-14 mb-1.5"
                 id="city"
                 type="text"
                 placeholder="City"
@@ -67,16 +66,16 @@ export default function OpenStore() {
 
             {/* Actions */}
             <div className="flex flex-col gap-2">
-              <Button className="w-full" type="submit">
+              <Button className="w-full h-11.5" type="submit">
                 Submit
               </Button>
-              <Button variant="link" type="button">
+              <Button variant="link" className="font-bold" type="button">
                 Back
               </Button>
             </div>
           </form>
         </div>
       </section>
-    </MainLayout>
+    </section>
   );
 }
