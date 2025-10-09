@@ -28,9 +28,6 @@ export default function CartPage() {
 
   if (isLoading) return <div>Loading cart...</div>;
   if (error) return <div>Error: {error.message}</div>;
-
-  console.log(data);
-
   return (
     <>
       <Navbar />

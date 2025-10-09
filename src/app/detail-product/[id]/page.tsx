@@ -197,7 +197,9 @@ export default function DetailProduct() {
                 onClick={handleAddToCart}
                 className="flex items-center justify-center gap-2 bg-black h-12 text-white w-full md:w-80 py-4 rounded-md hover:bg-gray-800 transition duration-300"
               >
-                <span className="text-lg font-medium">+ Add to Cart</span>
+                <Link href="/cart-page">
+                  <span className="text-lg font-medium">+ Add to Cart</span>
+                </Link>
               </Button>
             </div>
           </div>
