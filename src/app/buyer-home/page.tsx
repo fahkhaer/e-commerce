@@ -19,10 +19,13 @@ import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LogoutButton from "@/components/ui/LogoutButton";
 import Navbar from "@/components/layouts/Navbar";
+import { getMyProfile } from "@/services/auth";
 
 export default function ReviewBuyer() {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
+  const username = localStorage.getItem("username");
+  const avatar = localStorage.getItem("avatar");
 
   const [activeMenu, setActiveMenu] = useState<"orders" | "reviews">("orders");
 
@@ -30,6 +33,7 @@ export default function ReviewBuyer() {
     if (tab === "reviews") {
       setActiveMenu("reviews");
     }
+    getMyProfile();
   }, [tab]);
 
   return (
@@ -40,11 +44,14 @@ export default function ReviewBuyer() {
         <Card className="w-[227px] min-h-[230px] p-6 border-r bg-white flex flex-col gap-6 mt-6">
           <div className="flex items-center gap-3">
             <Avatar>
-              <AvatarImage src="https://i.pravatar.cc/40" alt="John Doe" />
+              <AvatarImage
+                src={avatar || "https://i.pravatar.cc/40"}
+                alt="John Doe"
+              />
               <AvatarFallback>JD</AvatarFallback>
             </Avatar>
             <div>
-              <p className="font-semibold">John Doe</p>
+              <p className="font-semibold">{username}</p>
             </div>
           </div>
 
