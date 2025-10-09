@@ -2,7 +2,6 @@ import Catalog from "@/components/layouts/Catalog";
 import MainLayout from "@/components/layouts/MainLayout";
 import Navbar from "@/components/layouts/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Star } from "lucide-react";
