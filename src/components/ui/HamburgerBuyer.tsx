@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
+import LogoutButton from "./LogoutButton";
 
 export function HamburgerBuyer() {
   return (
@@ -88,34 +89,7 @@ export function HamburgerBuyer() {
           </Link>
           <Dialog>
             <DialogTrigger asChild>
-              <Button
-                variant="ghost"
-                className="justify-start h-11.5 hover:font-bold transition-all duration-25 ease-out text-destructive hover:text-destructive"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clipPath="url(#clip0_43318_6711)">
-                    <path
-                      d="M17.2188 14.166C15.7779 16.6569 13.0848 18.3327 10.0003 18.3327C5.39795 18.3327 1.66699 14.6017 1.66699 9.99935C1.66699 5.39698 5.39795 1.66602 10.0003 1.66602C13.0848 1.66602 15.7779 3.34184 17.2188 5.83268M10.0004 6.66602L6.66705 9.99935M6.66705 9.99935L10.0004 13.3327M6.66705 9.99935H18.3337"
-                      stroke="#D9206E"
-                      strokeWidth="1.67"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_43318_6711">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                Logout
-              </Button>
+              <LogoutButton/>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
