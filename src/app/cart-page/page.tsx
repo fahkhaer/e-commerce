@@ -2,7 +2,6 @@
 
 import MainLayout from "@/components/layouts/MainLayout";
 import Navbar from "@/components/layouts/Navbar";
-import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -39,7 +38,7 @@ export default function CartPage() {
         <section className="mx-auto md:grid grid-cols-[7fr_3fr] w-full gap-6">
           {/* first column */}
           <section className="w-full mx-auto">
-            <h1 className="font-bold text-3xl md:text-[32px] leading-9 md:leading-[42px] md:pt-0 pt-6 pb-6 px-4 md:px-0">
+            <h1 className="font-bold text-3xl md:text-[32px] leading-9 md:leading-[42px] md:pt-0 pt-6 pb-6  md:px-0">
               Cart
             </h1>
             <div className="flex items-center text-md font-medium gap-3 pb-5">
