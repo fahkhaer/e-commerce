@@ -40,7 +40,7 @@ const GuestNav = () => {
 
 const LoginNav = () => {
   return (
-    <div className="flex gap-3 md:pl-10 items-baseline">
+    <div className="flex gap-3 md:pl-10 items-center">
       <Button
         variant="outline"
         className="hidden md:block w-fit rounded-full h-11 text-sm font-bold ml-4 bg-white border"
@@ -60,12 +60,12 @@ const LoginNav = () => {
 
       <Button
         variant="outline"
-        className="hidden md:block w-fit rounded-full h-11 text-sm font-bold my-auto py-2 px-3 gap-2 bg-white border"
+        className="hidden md:flex items-center w-fit rounded-full h-11 text-sm font-bold py-2 px-3 gap-2 bg-white border"
       >
-        <Link href="/buyer-home" className=" flex items-center gap-2 ">
+        <Link href="/buyer-home" className="flex items-center gap-2">
           <Avatar>
             <AvatarImage
-              className="rounded-full h-8"
+              className="rounded-full h-8 w-8 object-cover"
               src="https://github.com/shadcn.png"
             />
           </Avatar>

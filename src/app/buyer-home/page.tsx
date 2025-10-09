@@ -19,6 +19,8 @@ import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LogoutButton from "@/components/ui/LogoutButton";
 import Navbar from "@/components/layouts/Navbar";
+import NoReview from "@/components/layouts/NoReview";
+import NoOrder from "@/components/layouts/NoOrder";
 
 export default function ReviewBuyer() {
   const searchParams = useSearchParams();

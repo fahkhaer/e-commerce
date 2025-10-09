@@ -27,7 +27,7 @@ import { useParams } from "next/navigation";
 
 export default function DetailProduct() {
   const params = useParams();
-  const { id } = params; // id product
+  const { id } = params; 
   const [quantity, setQuantity] = useState<number>(1);
 
   const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));

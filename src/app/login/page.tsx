@@ -93,6 +93,7 @@ export default function LoginPage() {
               <Button className="px-2 pt-0 font-bold" variant="link">
                 <Link href="/register"> Register</Link>
               </Button>
+              
             </CardAction>
           </div>
         </CardFooter>
