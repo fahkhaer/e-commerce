@@ -53,7 +53,13 @@ export default function Catalog({ product }: CatalogProps) {
                 {/* product image */}
                 <Image
                   className="h-auto rounded-lg w-full"
-                  src={item.images[0] || "/imagecorrupt.png"}
+                  src={
+                    item.images &&
+                    item.images[0] &&
+                    item.images[0].includes("http")
+                      ? item.images[0]
+                      : "/imagecorrupt.png"
+                  }
                   alt="productexample.png"
                   width={100}
                   height={500}
