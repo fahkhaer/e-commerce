@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "@/components/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { StoreIcon } from "lucide-react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -24,15 +23,69 @@ import { useForm } from "react-hook-form";
 import { addOrder } from "@/services/checkout";
 import { CartItem, Shop } from "@/types/product.interface";
 import { Address } from "@/types/checkout.interface";
+import { useRouter } from "next/navigation";
 
 export default function CheckoutPage() {
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [shippingMethod, setShippingMethod] = useState("");
+  const [shippingCost, setShippingCost] = useState(0); // ongkir
   const [itemsId, setItemsId] = useState<number[]>([]);
   const [items, setItems] = useState<{ items: CartItem[]; shop: Shop }[]>();
-  const [shippingMethod, setShippingMethod] = useState("");
-  
-  const { register, handleSubmit } = useForm<Address>();
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    trigger,
+  } = useForm<Address>({ mode: "onChange" });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    const totalPriceParam = params.get("totalPrice");
+    if (totalPriceParam) {
+      setTotalPrice(Number(totalPriceParam));
+    }
+
+    const itemIdParam = params.get("itemId");
+    if (itemIdParam) {
+      try {
+        setItemsId(JSON.parse(itemIdParam));
+      } catch (e) {
+        console.error("Failed to parse itemsId:", e);
+      }
+    }
+
+    const itemsParam = params.get("items");
+    if (itemsParam) {
+      try {
+        setItems(JSON.parse(itemsParam));
+      } catch (e) {
+        console.error("Failed to parse items:", e);
+      }
+    }
+  }, []);
+
+  // Update shipping cost setiap shipping method berubah
+  useEffect(() => {
+    switch (shippingMethod) {
+      case "jne":
+      case "jnt":
+      case "gosend":
+        setShippingCost(10000); // contoh ongkir 10.000
+        break;
+      default:
+        setShippingCost(0);
+    }
+  }, [shippingMethod]);
 
   const onSubmit = async (data: Address) => {
+    if (!shippingMethod) {
+      router.push("/failed-checkout");
+      return;
+    }
+
     const newData = {
       address: {
         name: data.name,
@@ -44,37 +97,33 @@ export default function CheckoutPage() {
       shippingMethod,
       selectedItemIds: itemsId,
     };
+
     try {
       const response = await addOrder(newData);
       if (response) {
-        window.location.href = "/success-checkout";
+        router.push("/success-checkout");
       } else {
-        window.location.href = "/failed-checkout";
+        router.push("/failed-checkout");
       }
     } catch (error) {
       console.log(error);
+      router.push("/failed-checkout");
     }
   };
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const itemIdParam = params.get("itemId");
-    const itemsParam = params.get("items");
 
-    if (itemIdParam) {
-      try {
-        setItemsId(JSON.parse(itemIdParam));
-      } catch (e) {
-        console.error("Failed to parse items:", e);
-      }
+  const handlePayNowClick = async () => {
+    const valid = await trigger();
+    if (!valid || !shippingMethod) {
+      router.push("/failed-checkout");
+    } else {
+      document
+        .getElementById("my-form")
+        ?.dispatchEvent(
+          new Event("submit", { cancelable: true, bubbles: true })
+        );
     }
-    if (itemsParam) {
-      try {
-        setItems(JSON.parse(itemsParam));
-      } catch (e) {
-        console.error("Failed to parse items:", e);
-      }
-    }
-  }, []);
+  };
+  const totalAll = totalPrice + shippingCost;
 
   return (
     <>
@@ -101,39 +150,52 @@ export default function CheckoutPage() {
                     id="name"
                     type="text"
                     placeholder="Name"
-                    required
-                    {...register("name")}
+                    {...register("name", { required: true })}
                   />
+                  {errors.name && (
+                    <p className="text-red-500 text-sm">Name is required</p>
+                  )}
                   <Input
                     className="h-14 my-1.5"
                     id="phone"
                     type="number"
                     placeholder="Number Phone"
                     inputMode="numeric"
-                    required
-                    {...register("phone")}
+                    {...register("phone", { required: true })}
                   />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm">Phone is required</p>
+                  )}
                   <Input
                     className="h-14 my-1.5"
                     id="city"
                     type="text"
                     placeholder="City"
-                    required
-                    {...register("city")}
+                    {...register("city", { required: true })}
                   />
+                  {errors.city && (
+                    <p className="text-red-500 text-sm">City is required</p>
+                  )}
                   <Input
                     className="h-14 my-1.5"
                     id="postalCode"
                     type="number"
                     placeholder="Postal Code"
-                    required
-                    {...register("postalCode")}
+                    {...register("postalCode", { required: true })}
                   />
+                  {errors.postalCode && (
+                    <p className="text-red-500 text-sm">
+                      Postal Code is required
+                    </p>
+                  )}
                   <Textarea
                     className="font-regular text-muted-foreground resize-none h-31 my-1.5 p-3"
                     placeholder="Address"
-                    {...register("address")}
+                    {...register("address", { required: true })}
                   />
+                  {errors.address && (
+                    <p className="text-red-500 text-sm">Address is required</p>
+                  )}
                 </form>
               </div>
             </section>
@@ -208,6 +270,11 @@ export default function CheckoutPage() {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
+                  {!shippingMethod && (
+                    <p className="text-red-500 text-sm mt-1">
+                      Please select a shipping method
+                    </p>
+                  )}
                 </div>
               </div>
             </section>
@@ -329,21 +396,23 @@ export default function CheckoutPage() {
 
                 <div>
                   <h2 className="text-right leading-7 md:leading-8 text-sm md:text-base font-bold py-3">
-                    20.000.000
+                    Rp {totalPrice.toLocaleString()}
                   </h2>
-                  <h2 className="text-right eading-7 md:leading-8 text-sm md:text-base font-bold">
-                    Rp 10.000
+
+                  <h2 className="text-right leading-7 md:leading-8 text-sm md:text-base font-bold">
+                    Rp {shippingCost.toLocaleString()}
                   </h2>
-                  <h2 className="text-right eading-7 md:leading-8 text-sm md:text-base font-bold py-6 md:py-3">
-                    Rp 1.110.000
+
+                  <h2 className="text-right leading-7 md:leading-8 text-sm md:text-base font-bold py-6 md:py-3">
+                    Rp {totalAll.toLocaleString()}
                   </h2>
                 </div>
               </div>
               <div className="px-5">
                 <Button
                   className="w-full h-11.5  font-semibold"
-                  type="submit"
-                  form="my-form"
+                  type="button"
+                  onClick={handlePayNowClick}
                 >
                   Pay Now
                 </Button>

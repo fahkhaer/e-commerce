@@ -1,5 +1,6 @@
 "use client";
 
+import CartEmpty from "@/components/layouts/CartEmpty";
 import MainLayout from "@/components/layouts/MainLayout";
 import Navbar from "@/components/layouts/Navbar";
 import { Button } from "@/components/ui/button";
@@ -97,6 +98,7 @@ const ProductItem = ({ shop, items, onCheckedChange }: ProductItemProps) => {
     }));
     onCheckedChange(id);
   };
+
   return (
     <Card className="p-0 shadow-none">
       <CardContent className="p-0">
@@ -218,6 +220,8 @@ export default function CartPage() {
     })
     .filter(Boolean);
 
+  const isCartEmpty = !data?.groups || data.groups.length === 0;
+
   if (isLoading) return <div>Loading cart...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -227,51 +231,62 @@ export default function CartPage() {
       <MainLayout>
         <section className="mx-auto md:grid grid-cols-[7fr_3fr] w-full gap-6">
           <section className="w-full mx-auto">
-            <h1 className="font-bold text-3xl md:text-[32px] leading-9 md:leading-[42px] md:pt-0 pt-6 pb-6  md:px-0">
+            <h1 className="font-bold text-3xl md:text-[32px] leading-9 md:leading-[42px] md:pt-0 pt-6 pb-6 md:px-0">
               Cart
             </h1>
-            <div className="flex items-center text-md font-medium gap-3 pb-5">
-              <Checkbox id="all" />
-              <Label htmlFor="all">Select All</Label>
-            </div>
-            {data?.groups.map((item, i) => (
-              <div key={i}>
-                <ProductItem
-                  shop={item.shop}
-                  items={item.items}
-                  onCheckedChange={handleCheckedChange}
-                />
-                <br />
-              </div>
-            ))}
+
+            {isCartEmpty ? (
+              <CartEmpty />
+            ) : (
+              <>
+                <div className="flex items-center text-md font-medium gap-3 pb-5">
+                  <Checkbox id="all" />
+                  <Label htmlFor="all">Select All</Label>
+                </div>
+
+                {data.groups.map((item, i) => (
+                  <div key={i}>
+                    <ProductItem
+                      shop={item.shop}
+                      items={item.items}
+                      onCheckedChange={handleCheckedChange}
+                    />
+                    <br />
+                  </div>
+                ))}
+              </>
+            )}
           </section>
-          {/* second column */}
-          <section>
-            <section className="h-fit w-full rounded-xl ] bg-white shadow-[0px_0px_20px_0px_#CBCACA40] gap-4 py-5 px-5 mt-6 md:mt-0">
-              <h2 className="text-left md:leading-8 font-bold text-lg md:text-xl text-[#0A0D12] pt-3">
-                Total Shopping
-              </h2>
-              <div className="flex justify-between gap-2 py-2">
-                <h2 className="text-left md:leading-8 font-normal md:text-lg text-md py-3">
-                  Total
+
+          {!isCartEmpty && (
+            <section>
+              <section className="h-fit w-full rounded-xl bg-white shadow-[0px_0px_20px_0px_#CBCACA40] gap-4 py-5 px-5 mt-6 md:mt-0">
+                <h2 className="text-left md:leading-8 font-bold text-lg md:text-xl text-[#0A0D12] pt-3">
+                  Total Shopping
                 </h2>
-                <h2 className="text-right md:leading-8 font-bold text-md md:text-lg py-3">
-                  {data?.grandTotal}
-                </h2>
-              </div>
-              <Link
-                href={{
-                  pathname: "/checkout-page",
-                  query: {
-                    itemId: JSON.stringify(checkedItemIds),
-                    items: JSON.stringify(result),
-                  },
-                }}
-              >
-                <Button className="w-full text-base h-12">Checkout</Button>
-              </Link>
+                <div className="flex justify-between gap-2 py-2">
+                  <h2 className="text-left md:leading-8 font-normal md:text-lg text-md py-3">
+                    Total
+                  </h2>
+                  <h2 className="text-right md:leading-8 font-bold text-md md:text-lg py-3">
+                    {data?.grandTotal}
+                  </h2>
+                </div>
+                <Link
+                  href={{
+                    pathname: "/checkout-page",
+                    query: {
+                      itemId: JSON.stringify(checkedItemIds),
+                      items: JSON.stringify(result),
+                      totalPrice: data?.grandTotal,
+                    },
+                  }}
+                >
+                  <Button className="w-full text-base h-12">Checkout</Button>
+                </Link>
+              </section>
             </section>
-          </section>
+          )}
         </section>
       </MainLayout>
     </>
