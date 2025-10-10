@@ -27,13 +27,13 @@ export default function RegisterPage() {
   });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
-  // handle input text
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  // handle input file
+  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     setAvatarFile(file);
@@ -53,27 +53,21 @@ export default function RegisterPage() {
       apiFormData.append("email", formData.email);
       apiFormData.append("password", formData.password);
 
-      // kirim file avatar (kalau ada)
       if (avatarFile) {
         apiFormData.append("avatar", avatarFile);
       } else {
-        // fallback image default
         apiFormData.append(
           "avatarUrl",
           "https://res.cloudinary.com/dvz5kmwqx/image/upload/v1759557923/products/uwxwmwq3y0drl7u9vvpv.png"
         );
       }
 
-      // Register ke backend
       await registerApi(apiFormData);
 
-      // Setelah register, langsung login otomatis
       const loginResponse = await loginApi(formData.email, formData.password);
 
-      // Simpan token + user ke context
       login(loginResponse.token, loginResponse.user);
 
-      // Simpan user info ke localStorage agar Navbar bisa akses
       localStorage.setItem("token", loginResponse.token);
       localStorage.setItem("username", loginResponse.user.name);
       localStorage.setItem(
@@ -82,11 +76,14 @@ export default function RegisterPage() {
           "https://res.cloudinary.com/dvz5kmwqx/image/upload/v1759557923/products/uwxwmwq3y0drl7u9vvpv.png"
       );
 
-      // Redirect ke home
       window.location.href = "/";
-    } catch (error: any) {
-      alert("Gagal register atau login: " + error.message);
-    }
+   } catch (error: unknown) {
+  if (error instanceof Error) {
+    alert("Gagal register atau login: " + error.message);
+  } else {
+    alert("Gagal register atau login: Terjadi kesalahan tak diketahui.");
+  }
+}
   };
 
   return (
