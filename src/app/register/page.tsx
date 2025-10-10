@@ -55,6 +55,7 @@ export default function RegisterPage() {
 
       login(loginResponse.token, loginResponse.user);
       window.location.href = "/";
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
     } catch (error: any) {
       alert("Gagal register atau login: " + error.message);
     }

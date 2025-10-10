@@ -16,14 +16,22 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Reviews from "@/components/layouts/ReviewSeller";
 import StoreSettings from "@/components/layouts/StoreSettings";
 import { ProductsList } from "@/components/layouts/ProductsList";
 import OrderList from "@/components/layouts/OrderListSeller";
 import { useSearchParams } from "next/navigation";
 
-export default function SellerHome() {
+export default function HomeSeller() {
+  return (
+    <Suspense fallback={<div>Loading seller home...</div>}>
+      <SellerHome />
+    </Suspense>
+  );
+}
+
+function SellerHome() {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
 
@@ -34,7 +42,6 @@ export default function SellerHome() {
     if (tab === "reviews" || tab === "orders") {
       setActive(tab);
     } else {
-      // fallback ke default, misalnya "orders"
       setActive("orders");
     }
   }, [tab]);
