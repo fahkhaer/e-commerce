@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       "artofcards.in",
       "images.unsplash.com",
       "www.mobiledokan.com",
+      "e-commerce-theta-liart-83.vercel.app"
     ],
   },
   reactStrictMode: true,
