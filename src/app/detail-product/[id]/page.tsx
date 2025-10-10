@@ -157,16 +157,14 @@ export default function DetailProduct() {
                   </Avatar>
                   <div>
                     <h3 className="font-bold">
-                      
                       {product?.shop.name || "Unknown Store"}
                     </h3>
                     <p className="text-neutral-700">
-                      
                       {product?.shop.address || "Unknown Address"}
                     </p>
                   </div>
                 </div>
-                <Link href="/store">
+                <Link href={`/store/${product?.shop.id}`}>
                   <Button
                     variant="outline"
                     className="rounded-lg text-sm font-semibold px-5 py-2"

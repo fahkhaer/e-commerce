@@ -1,12 +1,37 @@
+"use client";
 import Catalog from "@/components/layouts/Catalog";
 import MainLayout from "@/components/layouts/MainLayout";
 import Navbar from "@/components/layouts/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { getProducts, getProductsById } from "@/services/products";
+import { iProduct } from "@/types/product.interface";
+import { useQuery } from "@tanstack/react-query";
 import { Star } from "lucide-react";
+import { useParams } from "next/navigation";
 
 export default function Store() {
+  const params = useParams();
+  const { id } = params;
+
+  const { data: products, isLoading } = useQuery<iProduct[]>({
+    queryKey: ["products"],
+    queryFn: () => getProducts(),
+  });
+
+  const storeProducts = products?.filter(
+    (product) => product.shop.id === Number(id)
+  );
+
+  const shopInfo = storeProducts?.[0]?.shop;
+
+  const { data: product, isLoading: isLoadingProduct } = useQuery<iProduct>({
+    queryKey: ["product", id],
+    queryFn: () => getProductsById(Number(id)),
+    enabled: !!id,
+  });
+
   return (
     <>
       <Navbar />
@@ -21,8 +46,12 @@ export default function Store() {
                   <AvatarFallback>TB</AvatarFallback>
                 </Avatar>
                 <div>
-                  <h3 className="font-bold">Toko Barokah Jaya</h3>
-                  <p className="text-neutral-700">Jakarta Selatan</p>
+                  <h3 className="font-bold">
+                    {shopInfo?.name || "Unknown Store"}
+                  </h3>
+                  <p className="text-neutral-700">
+                    {shopInfo?.address || "Unknown Address"}
+                  </p>
                 </div>
               </div>
               {/* review and rating */}
