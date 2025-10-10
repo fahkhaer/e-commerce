@@ -42,8 +42,8 @@ const GuestNav = () => {
 const LoginNav = () => {
   const username = localStorage.getItem("username");
   const avatar = localStorage.getItem("avatar");
-  
-  getMyProfile()
+
+  getMyProfile();
   return (
     <div className="flex gap-3 md:pl-10 items-center">
       <Link href="/cart-page">
@@ -72,7 +72,7 @@ const LoginNav = () => {
           <Avatar>
             <AvatarImage
               className="rounded-full h-8 w-8 object-cover"
-              src={avatar || '/imagecorrupt.png'}
+              src={avatar || "/imagecorrupt.png"}
             />
           </Avatar>
           {username}

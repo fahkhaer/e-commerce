@@ -18,6 +18,7 @@ export interface iProduct {
     name: string;
     slug: string;
     logo: string | null;
+    address: string;
   };
   description: string
   reviews: string[]
