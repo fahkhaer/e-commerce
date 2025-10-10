@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,36 +8,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Eye, Pencil, Trash2, Search } from "lucide-react"
-import Image from "next/image"
+} from "@/components/ui/table";
+import { Eye, Pencil, Trash2, Search } from "lucide-react";
+import Image from "next/image";
 
 export function ProductsList() {
   return (
     <div className="p-6 bg-muted/30 rounded-xl">
-      <h2 className="text-2xl font-bold mb-4">Products</h2>
-
-      {/* Add Product + Search */}
-      <div className="flex items-center justify-between mb-4">
-        <Button className="bg-black hover:bg-black/80 text-white">
-          + Add Product
-        </Button>
-        <div className="relative">
-          <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="pl-10 pr-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-        </div>
-      </div>
-
       {/* Table */}
       <div className="rounded-lg border bg-white shadow-sm">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[50px]">No</TableHead>
+              <TableHead className="w-[50px] text-center">No</TableHead>
               <TableHead>Product Info</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Stock</TableHead>
@@ -47,7 +30,7 @@ export function ProductsList() {
           <TableBody>
             {/* Row 1 */}
             <TableRow>
-              <TableCell>1</TableCell>
+              <TableCell className="text-center">1</TableCell>
               <TableCell>
                 <div className="flex items-center gap-3">
                   <Image
@@ -114,5 +97,5 @@ export function ProductsList() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -108,7 +108,11 @@ export default function DetailProduct() {
                   >
                     <Image
                       priority
-                      src={item || "/productexample.png"}
+                      src={
+                        item?.startsWith("http") || item?.startsWith("/")
+                          ? item
+                          : `/${item || "productexample.png"}`
+                      }
                       alt={`Product ${i + 1}`}
                       width={72}
                       height={72}

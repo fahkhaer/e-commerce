@@ -22,6 +22,8 @@ import StoreSettings from "@/components/layouts/StoreSettings";
 import { ProductsList } from "@/components/layouts/ProductsList";
 import OrderList from "@/components/layouts/OrderListSeller";
 import { useSearchParams } from "next/navigation";
+import { Logo } from "@/components/ui/logo";
+import Image from "next/image";
 
 export default function HomeSeller() {
   return (
@@ -51,22 +53,14 @@ function SellerHome() {
       {/* Sidebar */}
       <aside
         className={`${
-          open ? "w-64" : "w-16"
+          open ? "w-64" : "w-17.5"
         } bg-white border-r transition-all duration-300 flex flex-col`}
       >
         {/* Logo + toggle */}
-        <div className="flex items-center justify-between px-4 py-4 border-b">
-          <span className="font-bold text-lg">
+        <div className="flex items-center justify-between px-4 py-5 border-b">
+          <span className="font-bold text-xl">
             {open ? "Shirt Seller" : "SS"}
           </span>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setOpen(!open)}
-            className="ml-auto"
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
         </div>
 
         {/* Menu */}
@@ -143,8 +137,18 @@ function SellerHome() {
       {/* Content */}
       <main className="flex-1 flex flex-col">
         {/* Topbar */}
-        <header className="flex items-center justify-end bg-white px-6 py-4 border-b">
-          <div className="flex items-center space-x-2">
+        <header className="flex items-center justify-between bg-white py-4 border-b">
+          <div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setOpen(!open)}
+              className="ml-auto px-5"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="flex items-center px-20 space-x-2">
             <Avatar>
               <AvatarImage src="https://i.pravatar.cc/40" alt="John Doe" />
               <AvatarFallback>JD</AvatarFallback>
@@ -212,13 +216,17 @@ function SellerHome() {
 
           {active === "products" && (
             <>
-              <h1 className="text-2xl font-bold">Products</h1>
+              <h1 className="text-2xl pb-4 font-bold">Products</h1>
+              <Button className="bg-black hover:bg-black/80 h-12 w-45 text-white">
+                + Add Product
+              </Button>
               <ProductsList />
             </>
           )}
           {active === "orders" && (
             <>
               <h1 className="text-2xl font-bold">Order List</h1>
+
               <OrderList />
             </>
           )}

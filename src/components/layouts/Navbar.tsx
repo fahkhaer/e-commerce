@@ -116,10 +116,10 @@ export default function Navbar() {
             <p className="hidden md:block"> Catalog</p>
           </Link>
         </Badge>
-        <Command className=" flex items-start gap-1.5 h-11 px-4 rounded-lg border radius-xl w-full">
-          <SearchIcon className="size-4 opacity-50" />
+        <Command className="flex  gap-1.5 h-11  rounded-lg border radius-xl w-full">
+          {/* <SearchIcon className="size-4 opacity-50" /> */}
           <CommandInput
-            className="h-fit focus:outline-none"
+            className="p-0 focus:outline-none"
             placeholder="Search..."
           />
         </Command>

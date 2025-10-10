@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 
 const reviews = Array.from({ length: 10 }, (_, i) => ({
@@ -20,26 +19,23 @@ const reviews = Array.from({ length: 10 }, (_, i) => ({
   product: "Basketball Shoes Dunk Master",
   rating: 4.9,
   totalReview: 100,
-  image: "/shoes.png",
+  image: "/productexample.png",
 }));
 
 export default function Reviews() {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-xl font-semibold">
           <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
-          <span>4.9/5.0</span>
+          <span>
+            <span className="text-xl">4.9/ </span>
+            <span className="text-neutral-600 text-lg ">5.0</span>
+          </span>
         </div>
-        <Input
-          placeholder="Search"
-          className="w-64"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
       </div>
 
       {/* Table */}
@@ -47,16 +43,16 @@ export default function Reviews() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>No</TableHead>
-              <TableHead>Product Name</TableHead>
-              <TableHead>Rating</TableHead>
-              <TableHead>Total Review</TableHead>
-              <TableHead className="text-right">Action</TableHead>
+              <TableHead className="text-center">No</TableHead>
+              <TableHead className="text-left">Product Name</TableHead>
+              <TableHead className="text-left">Rating</TableHead>
+              <TableHead className="text-left">Total Review</TableHead>
+              <TableHead className="text-left ">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {reviews.map((r) => (
-              <TableRow key={r.id}>
+              <TableRow key={r.id} className="text-center">
                 <TableCell>{r.id}</TableCell>
                 <TableCell className="flex items-center gap-2">
                   <Image
@@ -69,12 +65,15 @@ export default function Reviews() {
                   />
                   <span>{r.product}</span>
                 </TableCell>
-                <TableCell className="flex items-center gap-1">
-                  <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                  {r.rating}
+                <TableCell className="text-left">
+                  <div className="flex gap-1">
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <span>{r.rating}</span>
+                  </div>
                 </TableCell>
-                <TableCell>{r.totalReview}</TableCell>
-                <TableCell className="text-right">
+
+                <TableCell className="text-left">{r.totalReview}</TableCell>
+                <TableCell className="items-center flex-row justify-items-start">
                   <Button variant="outline" size="sm">
                     See All Review
                   </Button>

@@ -71,7 +71,7 @@ export default function Catalog({ product }: CatalogProps) {
                     <Link href="/detail-product">{item.title}</Link>
                   </div>
                   <p className="text-sm md:text-base font-bold py-1">
-                    Rp{item.price}
+                    Rp{item.price.toLocaleString("id-ID")}
                   </p>
                   <div className="flex items-center">
                     <Star className="fill-[#FFAB0D] stroke-0 h-4" />

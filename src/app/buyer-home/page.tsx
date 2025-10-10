@@ -49,12 +49,12 @@ function ReviewBuyer() {
       <Navbar />
       <div className="flex pb-20 sm:px-4 md:px-30 md:py-10 bg-gray-50">
         {/* Sidebar */}
-        <Card className="w-[227px] min-h-[230px] p-6 border-r bg-white flex flex-col gap-6 mt-6">
-          <div className="flex items-center gap-3">
+        <Card className="hidden md:block w-[227px] min-h-[230px] h-fit p-6 border-r bg-white flex-col gap-6 mt-6">
+          <div className="flex items-center pb-3 gap-3">
             <Avatar>
               <AvatarImage
                 src={avatar || "https://i.pravatar.cc/40"}
-                alt="John Doe"
+                alt="avatar-image"
               />
               <AvatarFallback>JD</AvatarFallback>
             </Avatar>

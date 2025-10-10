@@ -105,6 +105,7 @@ const ProductItem = ({ shop, items, onCheckedChange }: ProductItemProps) => {
         {/* seller */}
         <div className="flex items-center gap-1.5 p-3">
           <Checkbox />
+          
           <StoreIcon className="ml-1.5" />
           <Label className="font-semibold leading-4 ">{shop.name}</Label>
         </div>
@@ -143,7 +144,7 @@ const ProductItem = ({ shop, items, onCheckedChange }: ProductItemProps) => {
               <div className="flex flex-row justify-between items-center md:flex-col md:justify-between md:items-end w-full md:w-auto pl-7 md:pl-0 mt-1 md:mt-0">
                 {/* Harga */}
                 <h2 className="font-bold text-base md:text-xl text-[#0A0D12] mb-0 md:mb-3 text-left md:text-right">
-                  {item.qty * item.product.price}
+Rp{(item.qty * item.product.price).toLocaleString("id-ID")}
                 </h2>
 
                 {/* Trash + tombol jumlah */}
@@ -269,7 +270,8 @@ export default function CartPage() {
                     Total
                   </h2>
                   <h2 className="text-right md:leading-8 font-bold text-md md:text-lg py-3">
-                    {data?.grandTotal}
+                    Rp{data?.grandTotal?.toLocaleString("id-ID")}
+
                   </h2>
                 </div>
                 <Link
