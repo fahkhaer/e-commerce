@@ -27,7 +27,7 @@ import { useParams } from "next/navigation";
 
 export default function DetailProduct() {
   const params = useParams();
-  const { id } = params; 
+  const { id } = params;
   const [quantity, setQuantity] = useState<number>(1);
 
   const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -150,20 +150,30 @@ export default function DetailProduct() {
               <div className="flex justify-between items-center border-t border-b border-neutral-300 py-5">
                 <div className="flex items-center gap-4">
                   <Avatar className="w-10 h-10">
-                    <AvatarImage src="/mustache.png" alt="Store Avatar" />
-                    <AvatarFallback>TB</AvatarFallback>
+                    <AvatarImage
+                      className="rounded-full h-8 w-8 object-cover"
+                      src={product?.shop.logo || "/imagecorrupt.png"}
+                    />
                   </Avatar>
                   <div>
-                    <h3 className="font-bold">Toko Barokah Jaya</h3>
-                    <p className="text-neutral-700">Jakarta Selatan</p>
+                    <h3 className="font-bold">
+                      {" "}
+                      {product?.shop.name || "Unknown Store"}
+                    </h3>
+                    <p className="text-neutral-700">
+                      {" "}
+                      {product?.shop.address || "Unknown Address"}
+                    </p>
                   </div>
                 </div>
-                <Button
-                  variant="outline"
-                  className="rounded-lg text-sm font-semibold px-5 py-2"
-                >
-                  See Store
-                </Button>
+                <Link href="/seller-home">
+                  <Button
+                    variant="outline"
+                    className="rounded-lg text-sm font-semibold px-5 py-2"
+                  >
+                    See Store
+                  </Button>
+                </Link>
               </div>
 
               {/* Quantity */}

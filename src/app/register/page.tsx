@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/ui/logo";
 import { useAuth } from "@/providers/AuthProvider";
 import { loginApi, registerApi } from "@/services/auth";
@@ -113,6 +114,20 @@ export default function RegisterPage() {
                 required
               />
             </div>
+            {/* upload file */}
+
+            <div>
+              <p className="font-normal mt-4 mb-2 text-muted-foreground text-sm">
+                Upload Profile Picture:
+              </p>
+              <Input
+                className="h-11.5 mb-1.5 py-2 text-md font-xl text-neutral-600"
+                id="picture"
+                type="file"
+                required
+              />
+            </div>
+
             <Button type="submit" className="w-full mt-5 h-11.5">
               Submit
             </Button>

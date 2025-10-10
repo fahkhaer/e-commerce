@@ -23,6 +23,8 @@ import {
 import LogoutButton from "./LogoutButton";
 
 export function HamburgerBuyer() {
+  const username = localStorage.getItem("username");
+  const avatar = localStorage.getItem("avatar");
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -32,28 +34,33 @@ export function HamburgerBuyer() {
         <SheetHeader className="px-4 shadow-[0_0_20px_0_rgba(203,202,202,0.25)]">
           <SheetTitle className="font-bold text-lg">Menu</SheetTitle>
         </SheetHeader>
-        <div className="grid grid-cols-2 place-items-center justify-center gap-2 px-4">
-          <Button variant="outline" className="rounded-full w-full">
-            <Link
-              href="/open-store"
-              className="flex items-center  gap-2 leading-none"
-            >
-              <Store className="size-5 fill " />
+        <div className="grid grid-cols-2 gap-2 px-4">
+          <Button
+            variant="outline"
+            className="rounded-full w-full justify-start px-3"
+          >
+            <Link href="/open-store" className="flex items-center gap-2 w-full">
+              <Store className="size-5" />
               <p className="font-bold text-sm">Open Store</p>
             </Link>
           </Button>
-          <Button variant="outline" className="rounded-full w-full">
-            <Link href="/buyer-home" className=" flex items-center gap-2 ">
+
+          <Button
+            variant="outline"
+            className="rounded-full w-full px-3 justify-start"
+          >
+            <Link href="/buyer-home" className="flex items-center gap-2 w-full">
               <Avatar>
                 <AvatarImage
-                  className="rounded-full h-8"
-                  src="https://github.com/shadcn.png"
+                  className="rounded-full py-1 h-7.5 w-7.5 object-cover"
+                  src={avatar || "/imagecorrupt.png"}
                 />
               </Avatar>
-              John Doe
+              <p className="font-bold text-sm">{username}</p>
             </Link>
           </Button>
         </div>
+
         <div className="grid p-3 ">
           <Link href="/buyer-home">
             <Button
@@ -89,7 +96,7 @@ export function HamburgerBuyer() {
           </Link>
           <Dialog>
             <DialogTrigger asChild>
-              <LogoutButton/>
+              <LogoutButton />
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
