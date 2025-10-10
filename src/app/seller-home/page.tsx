@@ -1,5 +1,11 @@
 "use client";
-
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
@@ -14,6 +20,7 @@ import {
   ShoppingBag,
   DollarSign,
   CheckCircle,
+  ImagePlus,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Suspense, useEffect, useState } from "react";
@@ -22,7 +29,12 @@ import StoreSettings from "@/components/layouts/StoreSettings";
 import { ProductsList } from "@/components/layouts/ProductsList";
 import OrderList from "@/components/layouts/OrderListSeller";
 import { useSearchParams } from "next/navigation";
-
+import { Dialog, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DialogContent, DialogTrigger } from "@radix-ui/react-dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import AddProductDialog from "@/components/layouts/AddProduct";
 
 export default function HomeSeller() {
   return (
@@ -216,9 +228,7 @@ function SellerHome() {
           {active === "products" && (
             <>
               <h1 className="text-2xl pb-4 font-bold">Products</h1>
-              <Button className="bg-black hover:bg-black/80 h-12 w-45 text-white">
-                + Add Product
-              </Button>
+              <AddProductDialog/>
               <ProductsList />
             </>
           )}
