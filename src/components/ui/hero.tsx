@@ -9,7 +9,7 @@ export default function HeroImage() {
         <div className="flex-shrink-0 w-1/2 md:w-1/3 flex justify-center  md:mb-0">
           <Image
             className="object-cover rounded-lg "
-            src="/hero.png"
+            src="/Hero.png"
             alt=""
             width={288}
             height={184}
