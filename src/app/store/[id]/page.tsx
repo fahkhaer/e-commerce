@@ -42,8 +42,11 @@ export default function Store() {
             <div className="flex justify-between items-center gap-4">
               <div className="flex gap-4">
                 <Avatar className="w-10 h-10">
-                  <AvatarImage src="/mustache.png" alt="Store Avatar" />
-                  <AvatarFallback>TB</AvatarFallback>
+                  <AvatarImage
+                    src={shopInfo?.logo || "/mustache.png"}
+                    alt="Store Avatar"
+                  />
+                  <AvatarFallback>Ava</AvatarFallback>
                 </Avatar>
                 <div>
                   <h3 className="font-bold">
