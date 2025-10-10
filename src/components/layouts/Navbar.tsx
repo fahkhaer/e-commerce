@@ -109,7 +109,7 @@ export default function Navbar() {
           variant="outline"
         >
           <Link
-            href="./catalog-page"
+            href="/catalog-page"
             className="flex items-center gap-1.5 px-2 font-normal text-sm"
           >
             <LayoutGrid />
