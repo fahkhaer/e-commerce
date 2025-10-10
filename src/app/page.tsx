@@ -3,7 +3,7 @@ import MainLayout from "@/components/layouts/MainLayout";
 import Navbar from "@/components/layouts/Navbar";
 import HeroImage from "@/components/ui/hero";
 
-export default function Home() {
+export default function Home() {  
   return (
     <>
       <Navbar />

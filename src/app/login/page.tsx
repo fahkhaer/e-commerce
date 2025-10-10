@@ -33,6 +33,7 @@ export default function LoginPage() {
       const result = await loginApi(data.email, data.password);
       login(result.token, result.user);
       window.location.href = "/";
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
     } catch (error: any) {
       alert(error.message || "Something went wrong");
     }

@@ -39,7 +39,7 @@ export default function Store() {
           </Card>
           <h4 className="text-3xl font-bold hidden md:block">Products</h4>
 
-          <Catalog />
+          <Catalog product={undefined} />
         </div>
       </MainLayout>
     </>

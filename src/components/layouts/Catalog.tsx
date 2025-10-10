@@ -7,9 +7,9 @@ import { BadgeCheck, Star } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface CatalogProps {
   product: iProduct[] | undefined;
@@ -53,7 +53,13 @@ export default function Catalog({ product }: CatalogProps) {
                 {/* product image */}
                 <Image
                   className="h-auto rounded-lg w-full"
-                  src={item.images[0] || "/imagecorrupt.png"}
+                  src={
+                    item.images &&
+                    item.images[0] &&
+                    item.images[0].includes("http")
+                      ? item.images[0]
+                      : "/imagecorrupt.png"
+                  }
                   alt="productexample.png"
                   width={100}
                   height={500}

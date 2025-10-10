@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { HamburgerBuyer } from "../ui/HamburgerBuyer";
 import Image from "next/image";
 import { HamburgerGuest } from "../ui/HamburgerGuest";
+import { getMyProfile } from "@/services/auth";
 
 const GuestNav = () => {
   return (
@@ -39,8 +40,15 @@ const GuestNav = () => {
 };
 
 const LoginNav = () => {
+  const username = localStorage.getItem("username");
+  const avatar = localStorage.getItem("avatar");
+  
+  getMyProfile()
   return (
-    <div className="flex gap-3 md:pl-10 items-baseline">
+    <div className="flex gap-3 md:pl-10 items-center">
+      <Link href="/cart-page">
+        <ShoppingCart className="shrink-0" />
+      </Link>
       <Button
         variant="outline"
         className="hidden md:block w-fit rounded-full h-11 text-sm font-bold ml-4 bg-white border"
@@ -53,23 +61,21 @@ const LoginNav = () => {
           Open Store
         </Link>
       </Button>
-      <Link href="/cart-page">
-        <ShoppingCart className="shrink-0" />
-      </Link>
+
       <HamburgerBuyer />
 
       <Button
         variant="outline"
-        className="hidden md:block w-fit rounded-full h-11 text-sm font-bold my-auto py-2 px-3 gap-2 bg-white border"
+        className="hidden md:flex items-center w-fit rounded-full h-11 text-sm font-bold py-2 px-3 gap-2 bg-white border"
       >
-        <Link href="/buyer-home" className=" flex items-center gap-2 ">
+        <Link href="/buyer-home" className="flex items-center gap-2">
           <Avatar>
             <AvatarImage
-              className="rounded-full h-8"
-              src="https://github.com/shadcn.png"
+              className="rounded-full h-8 w-8 object-cover"
+              src={avatar || '/imagecorrupt.png'}
             />
           </Avatar>
-          John Doe
+          {username}
         </Link>
       </Button>
     </div>

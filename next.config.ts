@@ -5,7 +5,9 @@ const nextConfig: NextConfig = {
     domains: [
       "res.cloudinary.com",
       "images.macrumors.com",
-      "artofcards.in", // ✅ tambahkan domain ini juga
+      "artofcards.in",
+      "images.unsplash.com",
+      "www.mobiledokan.com",
     ],
   },
   reactStrictMode: true,

@@ -1,10 +1,10 @@
 "use client";
 
+import React, { useEffect } from "react";
 import MainLayout from "@/components/layouts/MainLayout";
-import NavbarLoginUser from "@/components/layouts/NavbarLoginUser";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { StoreIcon, } from "lucide-react";
+import { StoreIcon } from "lucide-react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -19,84 +19,210 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import Navbar from "@/components/layouts/Navbar";
+import { useForm } from "react-hook-form";
+import { addOrder } from "@/services/checkout";
+import { CartItem, Shop } from "@/types/product.interface";
+import { Address } from "@/types/checkout.interface";
 
 export default function CheckoutPage() {
-  const [value, setValue] = useState("");
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // number input validation, 0-9
-    const onlyNumbers = e.target.value.replace(/\D/g, "");
-    setValue(onlyNumbers);
+  const [itemsId, setItemsId] = useState<number[]>([]);
+  const [items, setItems] = useState<{ items: CartItem[]; shop: Shop }[]>();
+  const [shippingMethod, setShippingMethod] = useState("");
+  
+  const { register, handleSubmit } = useForm<Address>();
+
+  const onSubmit = async (data: Address) => {
+    const newData = {
+      address: {
+        name: data.name,
+        phone: data.phone,
+        city: data.city,
+        postalCode: data.postalCode,
+        address: data.address,
+      },
+      shippingMethod,
+      selectedItemIds: itemsId,
+    };
+    try {
+      const response = await addOrder(newData);
+      if (response) {
+        window.location.href = "/success-checkout";
+      } else {
+        window.location.href = "/failed-checkout";
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const itemIdParam = params.get("itemId");
+    const itemsParam = params.get("items");
+
+    if (itemIdParam) {
+      try {
+        setItemsId(JSON.parse(itemIdParam));
+      } catch (e) {
+        console.error("Failed to parse items:", e);
+      }
+    }
+    if (itemsParam) {
+      try {
+        setItems(JSON.parse(itemsParam));
+      } catch (e) {
+        console.error("Failed to parse items:", e);
+      }
+    }
+  }, []);
 
   return (
     <>
-      <NavbarLoginUser />
+      <Navbar />
       <MainLayout>
-        <h1 className="font-bold text-2xl md:text-[32px] leading-9 md:leading-[42px] pb-8 px-4 md:px-0">
+        <h1 className="font-bold text-2xl md:text-[32px] leading-9 md:leading-[42px] md:pt-0 pt-6 pb-5 md:pb-8 px-4 md:px-0">
           Checkout
         </h1>
         <section className="mx-auto md:grid grid-cols-[7fr_3fr] w-full gap-6">
-          {/* shipping address section */}
-          <section className="w-full mx-auto h-fit gap-8 rounded-xl ] bg-white shadow-[0px_0px_20px_0px_#CBCACA40] p-3 md:p-5">
-            <div>
-              <h2 className="text-left md:leading-8 font-bold text-base md:text-lg md:pr-12 pt-3 pb-5 md:pt-0 md:pb-3">
-                Shipping Address
-              </h2>
+          <section>
+            {/* shipping address section */}
+            <section className="w-full mx-auto h-fit gap-8 rounded-xl ] bg-white shadow-[0px_0px_20px_0px_#CBCACA40] p-3 md:p-5">
+              <div>
+                <h2 className="text-left md:leading-8 font-bold text-base md:text-lg md:pr-12 pt-3 pb-5 md:pt-0 md:pb-3">
+                  Shipping Address
+                </h2>
+                <form
+                  className="border-[#CBCACA40]"
+                  onSubmit={handleSubmit(onSubmit)}
+                  id="my-form"
+                >
+                  <Input
+                    className="h-14 my-1.5"
+                    id="name"
+                    type="text"
+                    placeholder="Name"
+                    required
+                    {...register("name")}
+                  />
+                  <Input
+                    className="h-14 my-1.5"
+                    id="phone"
+                    type="number"
+                    placeholder="Number Phone"
+                    inputMode="numeric"
+                    required
+                    {...register("phone")}
+                  />
+                  <Input
+                    className="h-14 my-1.5"
+                    id="city"
+                    type="text"
+                    placeholder="City"
+                    required
+                    {...register("city")}
+                  />
+                  <Input
+                    className="h-14 my-1.5"
+                    id="postalCode"
+                    type="number"
+                    placeholder="Postal Code"
+                    required
+                    {...register("postalCode")}
+                  />
+                  <Textarea
+                    className="font-regular text-muted-foreground resize-none h-31 my-1.5 p-3"
+                    placeholder="Address"
+                    {...register("address")}
+                  />
+                </form>
+              </div>
+            </section>
+            <section className="w-full mx-auto mt-5 h-fit gap-8 rounded-xl ] bg-white shadow-[0px_0px_20px_0px_#CBCACA40] p-3 md:p-5">
+              {items?.map((item, i) => (
+                <div key={i}>
+                  <div className="flex gap-1.5 pb-5">
+                    <StoreIcon />
+                    <Label className="font-semibold leading-4 ">
+                      {item.shop.name}
+                    </Label>
+                  </div>
+                  {/* <!-- Product --> */}
+                  <div className="mb-6">
+                    {item.items.map((item) => (
+                      <div
+                        className="md:flex justify-between pb-3"
+                        key={item.id}
+                      >
+                        <div className="flex md:justify-center">
+                          <Image
+                            src={item.product.images[0]}
+                            alt={item.product.title}
+                            width={80}
+                            height={80}
+                            className="rounded-xl"
+                            priority
+                          />
+                          <div className="pl-3">
+                            <h2 className="text-left leading-7 pb-1 md:pb-0 md:leading-8 font-bold text-sm md:text-lg">
+                              {item.product.title}
+                            </h2>
+                            <p className="text-[#535862] text-sm md:text-base"></p>
+                            {item.product.title.split(" ")[0]}
+                            <h2 className="block md:hidden text-left leading-7 md:leading-8 font-bold text-sm md:text-lg text-[#0A0D12] md:py-3 pt-1 md:pb-0">
+                              {item.product.title.split(" ")[0]}
+                            </h2>
+                          </div>
+                        </div>
+                        {/* price */}
+                        <div className="hidden md:block">
+                          <h2 className="text-left leading-7 md:leading-8 font-bold text-sm md:text-lg text-[#0A0D12] py-3">
+                            {item.qty} X {item.product.price}{" "}
+                          </h2>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
 
-              <form className="border-[#CBCACA40]">
-                {/* <!-- Name --> */}
-                <Input
-                  className="h-14 my-1.5"
-                  id="name"
-                  type="text"
-                  placeholder="Name"
-                  required
-                ></Input>
-                <Input
-                  className="h-14 my-1.5"
-                  id="number-phone"
-                  type="text"
-                  placeholder="Number Phone"
-                  value={value}
-                  onChange={handleChange}
-                  inputMode="numeric"
-                  required
-                ></Input>
+              <hr className="bg-[#DFDFDF] dark:bg-[#252B37] h-px border-0 w-full" />
 
-                <Input
-                  className="h-14 my-1.5"
-                  id="city"
-                  type="text"
-                  placeholder="City"
-                  required
-                />
-                <Input
-                  className="h-14 my-1.5"
-                  id="postal-code"
-                  type="text"
-                  placeholder="Postal Code"
-                  required
-                />
-                <Textarea
-                  className="font-regular text-muted-foreground resize-none h-31 my-1.5 p-3"
-                  placeholder="Address"
-                />
-              </form>
-            </div>
+              {/* <!-- Shipping Method --> */}
+              <div>
+                <h2 className="text-left md:leading-8 font-bold text-base md:text-lg pt-5 pb-5 md:pt-3 md:pb-3">
+                  Shipping Method
+                </h2>
+
+                <div className="mb-4">
+                  <p className="text-base font-normal leading-8"></p>
+                  <Select onValueChange={(value) => setShippingMethod(value)}>
+                    <SelectTrigger className="w-full py-6 ">
+                      <SelectValue className="" placeholder="Select Shipping" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Select Shipping</SelectLabel>
+                        <SelectItem value="jne">JNE Regular</SelectItem>
+                        <SelectItem value="jnt">JNT Express</SelectItem>
+                        <SelectItem value="gosend">GoSend Instant</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </section>
           </section>
 
           {/* payment method section */}
-          <section className="h-fit w-full rounded-xl ] bg-white shadow-[0px_0px_20px_0px_#CBCACA40] gap-4 mt-5 md:mt-0 md:py-5 px-5 pb-5">
-            {/* put radio button here */}
-
+          <section className="h-fit w-full rounded-xl ] bg-white shadow-[0px_0px_20px_0px_#CBCACA40] gap-4 mt-5 md:mt-0 md:py-5  pb-5">
             {/* payment summary start here */}
-            <div>
-              <h2 className="text-left md:leading-8 font-bold text-base md:text-lg pt-4 pb-2 md:pb-0">
+            <div className="px-5">
+              <h2 className="text-left md:leading-8 font-bold text-base md:text-lg pb-2 md:pb-0">
                 Payment Summary
               </h2>
 
-              <RadioGroup defaultValue="bni">
-                <div className="flex items-center justify-between py-2">
+              <RadioGroup>
+                <div className="flex items-center justify-between pt-2">
                   <div className="flex items-center gap-2">
                     <Image
                       src="/BNI.png"
@@ -110,19 +236,20 @@ export default function CheckoutPage() {
                       htmlFor="bni"
                       className="text-left leading-7 md:leading-8 font-regular text-sm md:text-base py-3"
                     >
-                      ❗️tambah bank. perbaiki py
+                      BNI Virtual Account
                     </Label>
                   </div>
 
-                  <RadioGroupItem value="default" id="bni" />
+                  <RadioGroupItem value="bni" id="bni" />
                 </div>
 
-                <hr className="bg-[#DFDFDF] dark:bg-[#252B37] h-px border-0 w-full"></hr>
-                <div className="flex items-center justify-between py-2">
+                <hr className="bg-[#DFDFDF] dark:bg-[#252B37] h-px border-0 w-full" />
+                {/* second bank */}
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Image
-                      src="/BNI.png"
-                      alt="BNI"
+                      src="/BRI.png"
+                      alt="BRI"
                       width={40}
                       height={40}
                       className="rounded-[8px]"
@@ -137,8 +264,57 @@ export default function CheckoutPage() {
                   </div>
                   <RadioGroupItem value="bri" id="bri" />
                 </div>
+                <hr className="bg-[#DFDFDF] dark:bg-[#252B37] h-px border-0 w-full" />
+                {/* third bank */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/BCA.png"
+                      alt="BCA"
+                      width={40}
+                      height={40}
+                      className="rounded-[8px]"
+                      priority
+                    />
+                    <Label
+                      htmlFor="bca"
+                      className="text-left leading-7 md:leading-8 font-regular text-sm md:text-base py-3"
+                    >
+                      BCA Virtual Account
+                    </Label>
+                  </div>
+                  <RadioGroupItem value="bca" id="bca" />
+                </div>
+                {/* fourth bank */}
+                <hr className="bg-[#DFDFDF] dark:bg-[#252B37] h-px border-0 w-full"></hr>
+                <div className="flex items-center justify-between pb-3">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/Mandiri.png"
+                      alt="Mandiri"
+                      width={40}
+                      height={40}
+                      className="rounded-[8px]"
+                      priority
+                    />
+                    <Label
+                      htmlFor="bri"
+                      className="text-left leading-7 md:leading-8 font-regular text-sm md:text-base py-3"
+                    >
+                      Mandiri Virtual Account
+                    </Label>
+                  </div>
+                  <RadioGroupItem value="mandiri" id="mandiri" />
+                </div>
               </RadioGroup>
-              <div className="flex justify-between gap-2">
+            </div>
+            <hr className="bg-[#DFDFDF] dark:bg-[#252B37] h-px border-0 w-full"></hr>
+            {/* hr taro sini */}
+            <div>
+              <h2 className="text-left leading-7 md:leading-8 font-bold text-sm md:text-base px-5 pt-3">
+                Payment Summary
+              </h2>
+              <div className="flex justify-between gap-2 px-5">
                 <div>
                   <h2 className="text-left leading-7 md:leading-8 font-normal text-sm md:text-base py-3">
                     Total Price of Goods
@@ -153,7 +329,7 @@ export default function CheckoutPage() {
 
                 <div>
                   <h2 className="text-right leading-7 md:leading-8 text-sm md:text-base font-bold py-3">
-                    Rp 1.100.000
+                    20.000.000
                   </h2>
                   <h2 className="text-right eading-7 md:leading-8 text-sm md:text-base font-bold">
                     Rp 10.000
@@ -163,106 +339,15 @@ export default function CheckoutPage() {
                   </h2>
                 </div>
               </div>
-            </div>
-            <Button className="w-full">Pay Now</Button>
-          </section>
-          <section className="w-full mx-auto h-fit gap-8 rounded-xl ] bg-white shadow-[0px_0px_20px_0px_#CBCACA40] p-3 md:p-5">
-            <div className="flex gap-1.5 pb-5">
-              <StoreIcon />
-              <Label className="font-semibold leading-4 ">
-                Toko Abdi Fashion
-              </Label>
-            </div>
-            {/* <!-- Product --> */}
-            <div>
-              <div className="md:flex justify-between pb-3">
-                <div className="flex md:justify-center">
-                  <Image
-                    src="/productexample.png"
-                    alt="sneakers-court-minimalist"
-                    width={80}
-                    height={80}
-                    className="rounded-xl"
-                    priority
-                  />
-                  <div className="pl-3">
-                    <h2 className="text-left leading-7 pb-1 md:pb-0 md:leading-8 font-bold text-sm md:text-lg">
-                      Kaos Katun Premium
-                    </h2>
-                    <p className="text-[#535862] text-sm md:text-base">
-                      T-Shirt
-                    </p>
-
-                    <h2 className="block md:hidden text-left leading-7 md:leading-8 font-bold text-sm md:text-lg text-[#0A0D12] md:py-3 pt-1 md:pb-0">
-                      1 X Rp 1.100.000
-                    </h2>
-                  </div>
-                </div>
-                {/* price */}
-                <div className="hidden md:block">
-                  <h2 className="text-left leading-7 md:leading-8 font-bold text-sm md:text-lg text-[#0A0D12] py-3">
-                    1 X Rp 1.100.000
-                  </h2>
-                </div>
+              <div className="px-5">
+                <Button
+                  className="w-full h-11.5  font-semibold"
+                  type="submit"
+                  form="my-form"
+                >
+                  Pay Now
+                </Button>
               </div>
-              <div className="md:flex justify-between pb-3">
-                <div className="flex md:justify-center">
-                  <Image
-                    src="/productexample.png"
-                    alt="sneakers-court-minimalist"
-                    width={80}
-                    height={80}
-                    className="rounded-xl"
-                    priority
-                  />
-                  <div className="pl-3">
-                    <h2 className="text-left leading-7 pb-1 md:pb-0 md:leading-8 font-bold text-sm md:text-lg">
-                      Kaos Katun Premium
-                    </h2>
-                    <p className="text-[#535862] text-sm md:text-base">
-                      T-Shirt
-                    </p>
-
-                    <h2 className="block md:hidden text-left leading-7 md:leading-8 font-bold text-sm md:text-lg text-[#0A0D12] md:py-3 pt-1 md:pb-0">
-                      1 X Rp 1.100.000
-                    </h2>
-                  </div>
-                </div>
-                {/* price */}
-                <div className="hidden md:block">
-                  <h2 className="text-left leading-7 md:leading-8 font-bold text-sm md:text-lg text-[#0A0D12] py-3">
-                    1 X Rp 1.100.000
-                  </h2>
-                </div>
-              </div>
-            </div>
-
-            <hr className="bg-[#DFDFDF] dark:bg-[#252B37] h-px border-0 w-full" />
-
-            {/* <!-- Shipping Method --> */}
-            <div>
-              <h2 className="text-left md:leading-8 font-bold text-base md:text-lg pt-5 pb-5 md:pt-3 md:pb-3">
-                Shipping Method
-              </h2>
-
-              <div className="mb-4">
-                <p className="text-base font-normal leading-8"></p>
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Shipping" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Select Shipping</SelectLabel>
-                      <SelectItem value="jne">JNE Regular</SelectItem>
-                      <SelectItem value="jnt">JNT Express</SelectItem>
-                      <SelectItem value="gosend">GoSend Instant</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <hr className="bg-[#DFDFDF] dark:bg-[#252B37] h-px border-0 w-full" />
             </div>
           </section>
         </section>

@@ -1,10 +1,10 @@
+import { authApiClient } from "@/lib/api-clients";
 import { AuthResponse, User } from "@/types/auth";
 
 export const loginApi = async (
   email: string,
   password: string
 ): Promise<AuthResponse> => {
-  
   const res = await fetch(
     "https://e-commerce-api-production-26ab.up.railway.app/api/auth/login",
     {
@@ -19,6 +19,7 @@ export const loginApi = async (
   const auth = await res.json();
 
   localStorage.setItem("token", auth?.data.token);
+  getMyProfile();
 
   return {
     token: auth?.data.token,
@@ -41,4 +42,11 @@ export const registerApi = async (formData: FormData): Promise<User> => {
   }
 
   return res.json();
+};
+
+export const getMyProfile = async () => {
+  const { data } = await authApiClient.get(`/me`);
+  localStorage.setItem("username", data?.data.name);
+  localStorage.setItem("avatar", data.data.avatarUrl);
+  return data?.data;
 };
