@@ -72,7 +72,7 @@ export default function CheckoutPage() {
       case "jne":
       case "jnt":
       case "gosend":
-        setShippingCost(10000); 
+        setShippingCost(10000);
         break;
       default:
         setShippingCost(0);
@@ -130,7 +130,6 @@ export default function CheckoutPage() {
       }
     }
   }, []);
-
 
   const handlePayNowClick = async () => {
     const valid = await trigger();
@@ -378,7 +377,7 @@ export default function CheckoutPage() {
                 <div className="flex items-center justify-between pb-3">
                   <div className="flex items-center gap-2">
                     <Image
-                      src="/Mandiri.png"
+                      src="/mandiri.png"
                       alt="Mandiri"
                       width={40}
                       height={40}

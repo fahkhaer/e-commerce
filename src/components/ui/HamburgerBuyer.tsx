@@ -37,7 +37,7 @@ export function HamburgerBuyer() {
         <div className="grid grid-cols-2 gap-2 px-4">
           <Button
             variant="outline"
-            className="rounded-full w-full justify-start px-3"
+            className="rounded-full w-full py-5 justify-start px-3"
           >
             <Link href="/open-store" className="flex items-center gap-2 w-full">
               <Store className="size-5" />
@@ -47,12 +47,12 @@ export function HamburgerBuyer() {
 
           <Button
             variant="outline"
-            className="rounded-full w-full px-3 justify-start"
+            className="rounded-full w-full px-3 py-5 justify-start"
           >
             <Link href="/buyer-home" className="flex items-center gap-2 w-full">
-              <Avatar>
+              <Avatar className="">
                 <AvatarImage
-                  className="rounded-full py-1 h-7.5 w-7.5 object-cover"
+                  className="rounded-full h-8 w-8 object-cover"
                   src={avatar || "/imagecorrupt.png"}
                 />
               </Avatar>
