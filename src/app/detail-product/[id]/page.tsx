@@ -73,9 +73,11 @@ export default function DetailProduct() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href="/detail-product">Detail</Link>
-                </BreadcrumbLink>
+                <BreadcrumbPage>
+                  <Link href="#" className="font-bold">
+                    Detail
+                  </Link>
+                </BreadcrumbPage>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
