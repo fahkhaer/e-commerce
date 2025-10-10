@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { Button, buttonVariants } from "../ui/button";
 import { Command, CommandInput } from "../ui/command";
-import { LayoutGrid, SearchIcon, ShoppingCart, Store } from "lucide-react";
+import { LayoutGrid, ShoppingCart, Store } from "lucide-react";
 import { Logo } from "../ui/logo";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { useEffect, useState } from "react";

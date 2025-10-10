@@ -36,7 +36,7 @@ export default function CheckoutPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     trigger,
   } = useForm<Address>({ mode: "onChange" });
 
@@ -67,13 +67,12 @@ export default function CheckoutPage() {
     }
   }, []);
 
-  // Update shipping cost setiap shipping method berubah
   useEffect(() => {
     switch (shippingMethod) {
       case "jne":
       case "jnt":
       case "gosend":
-        setShippingCost(10000); // contoh ongkir 10.000
+        setShippingCost(10000); 
         break;
       default:
         setShippingCost(0);
@@ -110,6 +109,28 @@ export default function CheckoutPage() {
       router.push("/failed-checkout");
     }
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const itemIdParam = params.get("itemId");
+    const itemsParam = params.get("items");
+
+    if (itemIdParam) {
+      try {
+        setItemsId(JSON.parse(itemIdParam));
+      } catch (e) {
+        console.error("Failed to parse items:", e);
+      }
+    }
+    if (itemsParam) {
+      try {
+        setItems(JSON.parse(itemsParam));
+      } catch (e) {
+        console.error("Failed to parse items:", e);
+      }
+    }
+  }, []);
+
 
   const handlePayNowClick = async () => {
     const valid = await trigger();

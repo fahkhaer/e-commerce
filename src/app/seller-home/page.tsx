@@ -22,8 +22,7 @@ import StoreSettings from "@/components/layouts/StoreSettings";
 import { ProductsList } from "@/components/layouts/ProductsList";
 import OrderList from "@/components/layouts/OrderListSeller";
 import { useSearchParams } from "next/navigation";
-import { Logo } from "@/components/ui/logo";
-import Image from "next/image";
+
 
 export default function HomeSeller() {
   return (

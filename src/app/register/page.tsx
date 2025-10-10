@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/card";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/ui/logo";
 import { useAuth } from "@/providers/AuthProvider";
 import { loginApi, registerApi } from "@/services/auth";

@@ -230,7 +230,11 @@ export default function DetailProduct() {
               <div className="flex items-start gap-4">
                 <Avatar>
                   <AvatarImage
-                    src={item ?? "https://i.pravatar.cc/150?img=3"}
+                    src={
+                      typeof item === "string"
+                        ? item
+                        : "https://i.pravatar.cc/150?img=3"
+                    }
                   />
                   <AvatarFallback>J</AvatarFallback>
                 </Avatar>
@@ -278,13 +282,22 @@ export default function DetailProduct() {
               relatedProducts?.map((item) => (
                 <div key={item.id} className="item-card">
                   <Image
-                    src={item.images[0] || "/imagecorrupt.png"}
-                    alt={item.title}
+                    src={
+                      item?.images &&
+                      Array.isArray(item.images) &&
+                      typeof item.images[0] === "string" &&
+                      (item.images[0].startsWith("http") ||
+                        item.images[0].startsWith("/"))
+                        ? item.images[0]
+                        : "/imagecorrupt.png"
+                    }
+                    alt={item?.title || "Product Image"}
                     width={300}
                     height={300}
-                    className="w-full"
+                    className="w-full object-cover rounded-lg"
                     priority
                   />
+
                   <div className="p-5">
                     <Link
                       href={`/detail-product/${item.id}`}

@@ -15,7 +15,7 @@ export default function Store() {
   const params = useParams();
   const { id } = params;
 
-  const { data: products, isLoading } = useQuery<iProduct[]>({
+  const { data: products } = useQuery<iProduct[]>({
     queryKey: ["products"],
     queryFn: () => getProducts(),
   });
@@ -26,7 +26,7 @@ export default function Store() {
 
   const shopInfo = storeProducts?.[0]?.shop;
 
-  const { data: product, isLoading: isLoadingProduct } = useQuery<iProduct>({
+  const {} = useQuery<iProduct>({
     queryKey: ["product", id],
     queryFn: () => getProductsById(Number(id)),
     enabled: !!id,

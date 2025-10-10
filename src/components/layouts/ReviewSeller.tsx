@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import {
@@ -23,7 +21,6 @@ const reviews = Array.from({ length: 10 }, (_, i) => ({
 }));
 
 export default function Reviews() {
-  const [search, setSearch] = useState("");
 
   return (
     <div className="p-6 space-y-5">
