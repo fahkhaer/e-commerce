@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import OrderListBuyer from "@/components/layouts/OrderListBuyer";
@@ -21,7 +21,15 @@ import LogoutButton from "@/components/ui/LogoutButton";
 import Navbar from "@/components/layouts/Navbar";
 import { getMyProfile } from "@/services/auth";
 
-export default function ReviewBuyer() {
+export default function BuyerHome() {
+  return (
+    <Suspense fallback={<div>Loading buyer home...</div>}>
+      <ReviewBuyer />
+    </Suspense>
+  );
+}
+
+function ReviewBuyer() {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
   const username = localStorage.getItem("username");
@@ -117,7 +125,9 @@ export default function ReviewBuyer() {
           {activeMenu === "orders" && <OrderListBuyer />}
           {activeMenu === "reviews" && (
             <div className="flex flex-col gap-4">
-              <ReviewBuyerList />
+              <Suspense fallback={<div>Loading buyer home...</div>}>
+                <ReviewBuyerList />
+              </Suspense>
             </div>
           )}
         </main>
