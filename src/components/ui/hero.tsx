@@ -5,15 +5,14 @@ import Link from "next/link";
 export default function HeroImage() {
   return (
     <>
-
       <div className="flex items-center w-full bg-[#F3D7A4] rounded-[16px] px-3 shadow-md gap-4 sm:pt-3">
         <div className="flex-shrink-0 w-1/2 md:w-1/3 flex justify-center  md:mb-0">
           <Image
-            className=" md:h-72 object-cover rounded-lg h-46 w-auto"
+            className="object-cover rounded-lg "
             src="/hero.png"
             alt=""
-            width={100}
-            height={100}
+            width={288}
+            height={184}
             priority
           />
         </div>
